@@ -16,8 +16,77 @@ date: 2022-04-18
 last_modified_at: 2022-04-18
 ---
 
+# **그리디 알고리즘**
 
+### _현재 상황에서 지금 당장 좋은 것만 고르는 알고리즘_
 
-![_config.yml]({{ site.baseurl }}/images/config.png)
+&nbsp;  
+<span style='background-color: #df5c92; color: black'>**그리디 알고리즘의 특징부터 정리**</span>
 
-The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
+1. <u>사전에 외우고 있지 않아도 풀 수 있는 가능성이 많다!</u>
+2. <u>알고리즘에 대한 사용 방법을 정확히 알고 있어야 해결할 수 있다!</u>
+3. <u>암기보다는 많은 유형을 풀면서 익숙해져야 한다!</u>
+4. <u>문제를 보고 최소한의 아이디어를 낼 수 있는 창의성이 필요하다!</u>
+   &nbsp;  
+   &nbsp;
+
+<span style="color: OrangeRed">↘︎</span>  
+그리디 알고리즘의 문제는 쉬운 것 같으면서도 다양한 유형이 있으므로 결코 쉽다고만 볼 수는 없다. 다만, <span style='color: #df5c92'>**'가장 큰 순서대로'**</span>, <span style='color: #df5c92'>**'가장 작은 순서대로'**</span> 등의 기준이 문제 속에 알게 모르게 제시가 되어있으므로 이를 빠르게 캐치하자!
+
+(위의 '가장 큰(작은) 순서대로의 경우 정렬 알고리즘을 사용하게 되는데, 실제로 그리디 알고리즘은 정렬 알고리즘과 자주 짝지어 출제된다.)
+
+&nbsp;
+
+## **거스름돈 문제**
+
+---
+
+> 당신은 음식점의 계산을 도와주는 점원이다.  
+> 카운터에는 거스름돈으로 사용할 500원, 100원, 50원, 10원짜리 동전이 무한히 존재한다고 가정한다.  
+> 손님에게 거슬러 줘야 할 돈이 N원일 때 거슬러 줘야 할 동전의 최소 개수를 구하라.  
+> (단, 거슬러 줘야 할 돈 N은 항상 10의 배수이다.)
+
+가장 큰 화폐 단위부터 돈을 거슬러 줘야 가장 적은 동전으로 거스름 돈을 줄 수 있다.  
+&nbsp;
+
+### ex) **1,260원의 경우**
+
+1. 500원 (2)
+
+   2개까지 줄 수 있다.
+
+   → 1,260원 - 1,000원 = 260원
+
+2. 100원 (2)
+
+   2개까지 줄 수 있다.
+
+   → 260원 - 200원 = 60원
+
+3. 50원 (1)
+
+   1개까지 줄 수 있다.
+
+   → 60원 - 50원 = 10원
+
+4. 10원 (1)
+
+   1개만 주면 된다.
+
+   → 10원 - 10원 = 0원
+
+```python
+n = 1260 # 거스름돈
+
+# 화폐 단위 큰 순서대로 정렬한 배열
+list = [500, 100, 50, 10]
+
+count = 0 # 총 거스름돈으로 줄 동전 갯수
+for i in list :
+    count += n // i # 해당 화폐로 줄 수 있는 최대 갯수
+    n = n % i # 해당 화폐로 지급한 금액 빼기
+
+print(count)
+
+# 시간 복잡도 : O(N)
+```
