@@ -125,13 +125,13 @@ print(count) # 답 출력
 #### &nbsp;<span style='color: pink'>**앞서 예제 1에서의 이동 방법을 표현하는 방식과 이번에 방식 모두 앞으로 자주 사용하게 될 것이므로 기억해두는 편이 좋다.**</span>
 
 &nbsp;  
-**↘︎ 방법 1  
-<span style='color: pink'>&nbsp;types = ["L", "R", "U", "D"]  
+↘︎ 방법 1  
+<span style='color: pink'>&nbsp;**types = ["L", "R", "U", "D"]  
 &nbsp;move_x = [0, 0, -1, 1]  
-&nbsp;move_y = [-1, 1, 0, 0]</span>  
+&nbsp;move_y = [-1, 1, 0, 0]**</span>  
 &nbsp;  
 ↘︎ 방법 2  
-<span style='color: pink'>&nbsp;steps = [(2, 1), (2, -1), (-2, 1), (-2, -1), (1, 2), (1, -2), (-1, 2), (-1, -2)]**</span>  
+<span style='color: pink'>&nbsp;**steps = [(2, 1), (2, -1), (-2, 1), (-2, -1), (1, 2), (1, -2), (-1, 2), (-1, -2)]**</span>  
 &nbsp;
 
 ## **↘︎ 문제2 - 게임 개발**
