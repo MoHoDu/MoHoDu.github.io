@@ -151,12 +151,13 @@ CPU Time_B / CPU Time_A =
 ### <span style='color: #D0A9F5'>**↘︎ CPI 예제2**</span>
 
 &nbsp;  
-&nbsp;A, B, C class의 명령어들의 CPI와 2가지 sequence에서 각 명령어 사용 개수  
+&nbsp;A, B, C class의 명령어들의 CPI와 2가지 sequence에서 각 명령어 사용 개수
+
 | Class | CPI for class | IC in sequence 1 | IC in sequence 2 |
-| :----------: | :----------: | :----------: | :----------: |
-| A | 1 | 2 | 4 |
-| B | 2 | 1 | 1 |
-| C | 3 | 2 | 1 |
+| :---: | :-----------: | :--------------: | :--------------: |
+|   A   |       1       |        2         |        4         |
+|   B   |       2       |        1         |        1         |
+|   C   |       3       |        2         |        1         |
 
 &nbsp;  
 &nbsp; → 어떤 sequence가 더 빠를까?  
@@ -197,49 +198,53 @@ Avg.CPI = 9 / 6 = 1.5
 
 ### <span style='color: #D0A9F5'>**↘︎ Performance 종합 예제**</span>
 
-&nbsp;  
-| Op(명령어 타입) | Freq(빈도수) | CPI_i | Freq x CPI_i |  
-| :---------- | ----------: | ----------: | ----------: |  
-| ALU | 50% | 1 | 0.5 |  
-| Load | 20% | 5 | 1.0 |
-| Store | 10% | 3 | 0.3 |
-| Branch | 20% | 2 | 0.4 |
-| | | | ∑ = 2.2|
+&nbsp;
+
+| Op(명령어 타입) | Freq(빈도수) | CPI_i | Freq x CPI_i |
+| :-------------- | -----------: | ----: | -----------: |
+| ALU             |          50% |     1 |          0.5 |
+| Load            |          20% |     5 |          1.0 |
+| Store           |          10% |     3 |          0.3 |
+| Branch          |          20% |     2 |          0.4 |
+|                 |              |       |      ∑ = 2.2 |
 
 &nbsp;  
-&nbsp;Q1. 데이터 캐시(5장에서 배움)를 사용했더니 Load타입의 CPI가 2로 줄었다. 얼마나 빨라지는가?  
-| Op(명령어 타입) | Freq(빈도수) | CPI_i | Freq x CPI_i |  
-| :---------- | ----------: | ----------: | ----------: |  
-| ALU | 50% | 1 | 0.5 |  
-| Load | 20% | <span style='color: pink'>**2**</span> | <span style='color: pink'>**0.4**</span> |
-| Store | 10% | 3 | 0.3 |
-| Branch | 20% | 2 | 0.4 |
-| | | | ∑ = <span style='color: pink'>**1.6**</span>|
+&nbsp;Q1. 데이터 캐시(5장에서 배움)를 사용했더니 Load타입의 CPI가 2로 줄었다. 얼마나 빨라지는가?
+
+| Op(명령어 타입) | Freq(빈도수) |                                  CPI_i |                                 Freq x CPI_i |
+| :-------------- | -----------: | -------------------------------------: | -------------------------------------------: |
+| ALU             |          50% |                                      1 |                                          0.5 |
+| Load            |          20% | <span style='color: pink'>**2**</span> |     <span style='color: pink'>**0.4**</span> |
+| Store           |          10% |                                      3 |                                          0.3 |
+| Branch          |          20% |                                      2 |                                          0.4 |
+|                 |              |                                        | ∑ = <span style='color: pink'>**1.6**</span> |
 
 &nbsp;  
 &nbsp;n배 빠르다 = CPU Time old / CPU Time new  
 &nbsp;CPU Time new (= 1.6 x IC x CC) / CPU Time old (= 2.2 x IC x CC)  
 &nbsp; = 2.2 / 1.6 = 약 1.375 = 37.5% 만큼 빨라졌다.  
 &nbsp;  
-&nbsp;Q2. branch prediction(4장에서 배움)을 사용하니까 2 사이클 걸리던 branch타입의 CPI가 1 사이클로 줄었다.  
-| Op(명령어 타입) | Freq(빈도수) | CPI_i | Freq x CPI_i |  
-| :---------- | ----------: | ----------: | ----------: |  
-| ALU | 50% | 1 | 0.5 |  
-| Load | 20% | 5 | 1.0 |
-| Store | 10% | 3 | 0.3 |
-| Branch | 20% | <span style='color: pink'>**1**</span> | <span style='color: pink'>**0.2**</span> |
-| | | | ∑ = <span style='color: pink'>**2.0**</span>|
+&nbsp;Q2. branch prediction(4장에서 배움)을 사용하니까 2 사이클 걸리던 branch타입의 CPI가 1 사이클로 줄었다.
+
+| Op(명령어 타입) | Freq(빈도수) |                                  CPI_i |                                 Freq x CPI_i |
+| :-------------- | -----------: | -------------------------------------: | -------------------------------------------: |
+| ALU             |          50% |                                      1 |                                          0.5 |
+| Load            |          20% |                                      5 |                                          1.0 |
+| Store           |          10% |                                      3 |                                          0.3 |
+| Branch          |          20% | <span style='color: pink'>**1**</span> |     <span style='color: pink'>**0.2**</span> |
+|                 |              |                                        | ∑ = <span style='color: pink'>**2.0**</span> |
 
 &nbsp;→ 2.2 / 2.0 = 1.1 = 10% 정도 빨라진다.  
 &nbsp;  
-&nbsp;Q3. ALU 명령어를 1번에 2개씩 실행할 수 있게끔 바뀌었다.  
-| Op(명령어 타입) | Freq(빈도수) | CPI_i | Freq x CPI_i |  
-| :---------- | ----------: | ----------: | ----------: |  
-| ALU | 50% | <span style='color: pink'>**0.5**</span> | <span style='color: pink'>**0.25**</span> |  
-| Load | 20% | 5 | 1.0 |
-| Store | 10% | 3 | 0.3 |
-| Branch | 20% | 2 | 0.4 |
-| | | | ∑ = <span style='color: pink'>**1.95**</span>|
+&nbsp;Q3. ALU 명령어를 1번에 2개씩 실행할 수 있게끔 바뀌었다.
+
+| Op(명령어 타입) | Freq(빈도수) |                                    CPI_i |                                  Freq x CPI_i |
+| :-------------- | -----------: | ---------------------------------------: | --------------------------------------------: |
+| ALU             |          50% | <span style='color: pink'>**0.5**</span> |     <span style='color: pink'>**0.25**</span> |
+| Load            |          20% |                                        5 |                                           1.0 |
+| Store           |          10% |                                        3 |                                           0.3 |
+| Branch          |          20% |                                        2 |                                           0.4 |
+|                 |              |                                          | ∑ = <span style='color: pink'>**1.95**</span> |
 
 &nbsp;→ 2.2 / 1.95 = 약 1.28 = 12.8% 정도 빨라진다.  
 &nbsp;
