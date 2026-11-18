@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /test-version/
 Sitemap: https://mohodu.github.io/sitemap.xml
