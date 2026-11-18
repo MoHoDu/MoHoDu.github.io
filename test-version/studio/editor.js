@@ -74,3 +74,28 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 window.addEventListener('beforeunload',()=>{if(doc)queueSave().catch(()=>{})});
 try{const draft=new URLSearchParams(location.search).get('draft');if(draft&&!/^[a-z0-9-]+$/.test(draft))throw Error('잘못된 초안 주소입니다.');const entries=await storage.all();if(draft){const entry=entries.find(e=>e.id===draft);await activate(entry?.doc||await fetch('drafts/'+draft+'.json').then(r=>{if(!r.ok)throw Error('초안을 찾을 수 없습니다.');return r.json()}))}else{const entry=entries.find(e=>e.id===storage.last())||entries.sort((a,b)=>b.updatedAt-a.updatedAt)[0];await activate(entry?.doc||await fetch('overdrive.json').then(r=>r.json()))}}catch(error){status('자동 저장을 사용할 수 없습니다: '+error.message,true);if(!doc)doc=validate(await fetch('overdrive.json').then(r=>r.json()));renderStructure();renderFields();send()}
 
+
+const handoffDialog = $('#handoff-dialog');
+$('#handoff').onclick = () => handoffDialog.showModal();
+$('#handoff-save').onclick = async () => {
+  const button = $('#handoff-save');
+  button.disabled = true;
+  try {
+    const snapshot = clone(doc);
+    const handoff = {
+      documentId: snapshot.id,
+      savedAt: new Date().toISOString(),
+      selectedBlock: selected,
+      request: $('#handoff-note').value.trim()
+    };
+    const packed = await portable(snapshot, status);
+    saveJSON({ ...packed, handoff });
+    handoffDialog.close();
+    $('#handoff-note').value = '';
+    status('수정본을 저장했습니다. 채팅에 첨부하거나 파일 경로를 알려주세요.');
+  } catch (error) {
+    status('수정본 저장 실패 · ' + error.message, true);
+  } finally {
+    button.disabled = false;
+  }
+};

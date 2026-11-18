@@ -1,7 +1,7 @@
 import {mount} from './renderer.js';
 import {validate} from './model.js';
 import {portable,saveJSON,saveHTML} from './files.js';
-const key=new URLSearchParams(location.search).get('draft')||'overdrive-background-v1';
+const key=new URLSearchParams(location.search).get('draft')||'overdrive-background-v3';
 const notice=document.querySelector('#notice');
 try{
  if(!/^[a-z0-9-]+$/.test(key))throw Error('잘못된 초안 주소입니다.');
@@ -15,3 +15,4 @@ try{
   try{const packed=await portable(doc,message=>notice.textContent=message);await exporter(packed);notice.textContent='저장했습니다.'}catch(e){notice.textContent=e.message}finally{document.querySelectorAll('.review-tools button').forEach(b=>b.disabled=false)}
  };
 }catch(e){notice.textContent=e.message;document.querySelectorAll('.review-tools button').forEach(b=>b.disabled=true)}
+

@@ -32,3 +32,43 @@
 .editorial .kind-heading{border-top:1px solid var(--line);padding-top:28px}.editorial .kind-heading h2{max-width:900px}
 @media(max-width:700px){.visual-cards{grid-template-columns:1fr}.flow-strip{grid-template-columns:1fr;gap:23px}.flow-strip li{padding:18px}.flow-arrow{top:auto;bottom:-26px;left:50%;right:auto;transform:rotate(90deg)}.visual-cards article>div{padding:20px}.flow-strip li:has(figure){display:grid;grid-template-columns:72px 1fr;gap:8px 15px}.flow-strip li:has(figure) .flow-number{grid-column:1/-1;margin:0}.flow-strip li:has(figure) figure{grid-column:1;grid-row:2/4;margin:0}.flow-strip li:has(figure) h3,.flow-strip li:has(figure) p{grid-column:2}}
 @media print{.visual-cards,.flow-strip{break-inside:avoid}.accordion details>div{display:block!important}.accordion details::details-content{content-visibility:visible}.flow-arrow{display:none}}
+
+/* Keep the text and media on the same editorial grid. */
+.editorial main > .width-wide { max-width: 100%; margin-inline: 0; }
+.editorial .block > p { max-width: 75ch; }
+.visual-cards { align-items: stretch; }
+.visual-cards article { display: flex; flex-direction: column; }
+.visual-cards article > div { flex: 1; }
+.visual-cards figure { background: var(--surface); }
+.visual-cards img, .visual-cards video { background: var(--surface); }
+.editorial .flow-strip { gap: 0; border-block: 1px solid var(--line); }
+.editorial .flow-strip li {
+  background: transparent;
+  border: 0;
+  padding: 24px 22px;
+}
+.editorial .flow-strip li + li { border-left: 1px solid var(--line); }
+.editorial .flow-number {
+  display: inline-block;
+  color: var(--accent);
+  font-size: .78em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.editorial .flow-arrow {
+  display: grid;
+  place-items: center;
+  inset: 22px -12px auto auto;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: var(--surface);
+  font-size: 15px;
+  line-height: 1;
+}
+@media (max-width: 700px) {
+  .editorial .flow-strip li + li { border-left: 0; border-top: 1px solid var(--line); }
+  .editorial .flow-strip li { padding: 18px 16px; }
+  .editorial .flow-arrow { inset: auto 16px -12px auto; }
+}
