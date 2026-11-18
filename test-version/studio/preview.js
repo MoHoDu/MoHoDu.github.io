@@ -1,0 +1,4 @@
+import {mount} from './renderer.js';
+const root=document.querySelector('#portfolio');let editing=true;
+addEventListener('message',e=>{if(e.source!==parent||e.origin!==location.origin)return;if(e.data.type==='render'){const scroll=scrollY;editing=e.data.editing!==false;mount(root,e.data.doc,{editing,onSelect:id=>parent.postMessage({type:'select',id},location.origin),onTheme:theme=>parent.postMessage({type:'theme',theme},location.origin)});if(e.data.selected)root.querySelector(`[data-block="${CSS.escape(e.data.selected)}"]`)?.classList.add('selected');scrollTo(0,scroll);}if(e.data.type==='focus-block'){root.querySelectorAll('.selected').forEach(e=>e.classList.remove('selected'));const el=root.querySelector(`[data-block="${CSS.escape(e.data.id)}"]`);el?.classList.add('selected');el?.scrollIntoView({block:'center',behavior:'instant'})}});
+parent.postMessage({type:'ready'},location.origin);

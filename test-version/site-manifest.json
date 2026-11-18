@@ -129,6 +129,17 @@
     "rolling-kimbaps/pdf/index.html",
     "rolling-kimbaps/pdf/latest.pdf",
     "rolling-kimbaps/print/index.html",
+    "studio/editor.css",
+    "studio/editor.js",
+    "studio/files.js",
+    "studio/index.html",
+    "studio/model.js",
+    "studio/overdrive.json",
+    "studio/preview.html",
+    "studio/preview.js",
+    "studio/renderer.css",
+    "studio/renderer.js",
+    "studio/storage.js",
     "style.css",
     "site-manifest.json"
   ]
