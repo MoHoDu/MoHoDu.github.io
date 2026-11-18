@@ -1,7 +1,7 @@
 import {mount} from './renderer.js';
 import {validate} from './model.js';
 import {portable,saveJSON,saveHTML} from './files.js';
-const key=new URLSearchParams(location.search).get('draft')||'overdrive-background-v3';
+const key=new URLSearchParams(location.search).get('draft')||'overdrive-background-v4';
 const notice=document.querySelector('#notice');
 try{
  if(!/^[a-z0-9-]+$/.test(key))throw Error('잘못된 초안 주소입니다.');
