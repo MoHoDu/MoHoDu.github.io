@@ -1,5 +1,16 @@
-const panel=document.querySelector('#comparison');
-const toggle=document.querySelector('#compare-toggle');
-function update(side){document.querySelector(`#${side}-frame`).src=document.querySelector(`#${side}-choice`).value+'/';}
-toggle.addEventListener('click',()=>{const opening=panel.hidden;panel.hidden=!opening;toggle.setAttribute('aria-expanded',opening);toggle.innerHTML=opening?'나란히 보기 닫기 <span>−</span>':'두 시안 나란히 열기 <span>＋</span>';if(opening){for(const side of ['left','right'])if(!document.querySelector(`#${side}-frame`).getAttribute('src'))update(side);}});
-for(const side of ['left','right'])document.querySelector(`#${side}-choice`).addEventListener('change',()=>update(side));
+const designs=[
+ {id:'cinema',name:'게임 소개형',en:'GAME SHOWCASE',description:'장면으로 끌어들이고, 기능을 하나씩 소개합니다.',flow:['장면','교차 배치','기능 탐색'],data:'C → S 강화 단계와 큰 숫자',loop:'탭으로 넘기는 기능 소개',media:'전폭 표지 · 좌우 교차 · 비교 슬라이더',ref:'ASTRO BOT 공식 소개',url:'https://www.playstation.com/en-us/games/astro-bot/'},
+ {id:'editorial',name:'개발기형',en:'DEVELOPER STORY',description:'관찰한 근거와 기획자의 판단을 따라 읽습니다.',flow:['질문','원고와 근거','판단과 설계'],data:'추세 그래프와 근거를 연결한 표',loop:'본문을 따라 내려가는 세로 과정',media:'기사 커버 · 본문 삽입 · 2열 주석 비교',ref:'Riot Hwei 개발기',url:'https://www.leagueoflegends.com/en-us/news/dev/champion-insights-hwei/'},
+ {id:'lab',name:'캐릭터 도감형',en:'CHARACTER DOSSIER',description:'스킬과 무기를 선택하며 연결을 찾아봅니다.',flow:['역할','스킬 선택','무기 상세'],data:'등급별 무기 도감과 상세 패널',loop:'단계 도식 · 펼쳐보는 체크포인트',media:'프로필 · 선택 항목별 자료 · 전투 갤러리',ref:'Hwei 챔피언 상세',url:'https://www.leagueoflegends.com/en-us/champions/hwei/'}
+];
+document.querySelector('#designs').innerHTML=designs.map((d,i)=>`<article class="design"><a data-open="${d.id}" href="${d.id}/?theme=light" class="design-preview"><img src="media/v2-${d.id}-light.jpg" alt="${d.name} 화이트 시안"><span>전체 페이지 ↗</span></a><div class="design-copy"><p class="eyebrow">0${i+1} / ${d.en}</p><h2>${d.name}</h2><p class="description">${d.description}</p><div class="mini-flow">${d.flow.map(x=>'<b>'+x+'</b>').join('<i>→</i>')}</div><dl><div><dt>같은 무기 수치</dt><dd>${d.data}</dd></div><div><dt>같은 반복 흐름</dt><dd>${d.loop}</dd></div><div><dt>사진과 영상</dt><dd>${d.media}</dd></div></dl><a class="reference-link" href="${d.url}" target="_blank" rel="noopener">구성 참고: ${d.ref} ↗</a><a class="design-open" data-open="${d.id}" href="${d.id}/?theme=light">시안 열기 <span>↗</span></a></div></article>`).join('');
+const panel=document.querySelector('#comparison'),toggle=document.querySelector('#compare-toggle');
+function update(side){document.querySelector(`#${side}-frame`).src=document.querySelector(`#${side}-choice`).value+'/?theme='+document.querySelector(`#${side}-theme`).value;}
+toggle.onclick=()=>{
+ const opening=panel.hidden;panel.hidden=!opening;toggle.setAttribute('aria-expanded',opening);toggle.textContent=opening?'나란히 보기 닫기 −':'나란히 열기 ＋';
+ for(const side of ['left','right']){const frame=document.querySelector(`#${side}-frame`);if(opening){if(!frame.getAttribute('src'))update(side)}else frame.contentDocument?.querySelectorAll('video').forEach(v=>v.pause());}
+};
+for(const side of ['left','right'])for(const suffix of ['choice','theme'])document.querySelector(`#${side}-${suffix}`).onchange=()=>update(side);
+function theme(mode){document.documentElement.dataset.theme=mode;document.querySelectorAll('[data-gallery-theme]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.galleryTheme===mode));document.querySelectorAll('[data-open]').forEach(a=>{a.href=a.dataset.open+'/?theme='+mode;const img=a.querySelector('img');if(img){img.src='media/v2-'+a.dataset.open+'-'+mode+'.jpg';img.alt=designs.find(d=>d.id===a.dataset.open).name+' '+(mode==='light'?'화이트':'다크')+' 시안';}});try{localStorage.setItem('portfolio-gallery-theme',mode)}catch{}}
+document.querySelectorAll('[data-gallery-theme]').forEach(b=>b.onclick=()=>theme(b.dataset.galleryTheme));
+let stored;try{stored=localStorage.getItem('portfolio-gallery-theme')}catch{}theme(stored==='dark'?'dark':'light');
