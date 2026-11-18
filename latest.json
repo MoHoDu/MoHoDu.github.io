@@ -1,0 +1,42 @@
+{
+  "resume": {
+    "version": "A8",
+    "pages": 8,
+    "document": "resume/document.html"
+  },
+  "curtaincall": {
+    "version": "v7",
+    "pages": 16,
+    "document": "curtaincall/portfolio/document.html"
+  },
+  "lingocity": {
+    "version": "v1",
+    "pages": 4,
+    "document": "lingocity/print/index.html"
+  },
+  "dolleye": {
+    "version": "v1",
+    "pages": 5,
+    "document": "dolleye/print/index.html"
+  },
+  "rolling-kimbaps": {
+    "version": "v1",
+    "pages": 4,
+    "document": "rolling-kimbaps/print/index.html"
+  },
+  "octoplug": {
+    "version": "v1",
+    "pages": 4,
+    "document": "octoplug/print/index.html"
+  },
+  "namer": {
+    "version": "v1",
+    "pages": 4,
+    "document": "namer/print/index.html"
+  },
+  "overdrive": {
+    "version": "v1",
+    "pages": 3,
+    "document": "overdrive/print/index.html"
+  }
+}
