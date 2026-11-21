@@ -5,9 +5,9 @@
     "document": "resume/document.html"
   },
   "curtaincall": {
-    "version": "v8",
-    "pages": 16,
-    "document": "curtaincall/portfolio/document.html"
+    "version": "v9",
+    "pages": 23,
+    "document": "curtaincall/index.html?print=1"
   },
   "lingocity": {
     "version": "v2",
