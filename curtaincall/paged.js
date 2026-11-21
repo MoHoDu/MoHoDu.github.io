@@ -11,7 +11,7 @@
 
   // 일정 패널은 둘째 날을 펼친 상태로 고정한다.
   const dayBtn = qa("#days button")[1]; if (dayBtn) dayBtn.click();
-  qa("#car details").forEach(d => d.open = true);
+  qa("#cview details").forEach(d => d.open = true);
 
   const style = document.createElement("style");
   style.textContent = `
@@ -41,6 +41,24 @@ html.paged *,html.paged *::before,html.paged *::after{transition:none!important;
 .pg .tl::before{display:none}
 .pg .layer{opacity:1!important;transform:none!important}
 .pg .hint{display:none}
+.pg .bs-bar .post{transform:none}
+.pg .case-t{margin-bottom:18px}
+.pg .ba{grid-template-columns:1fr 1fr;cursor:default}
+.pg .ba-poster{opacity:1!important}
+.pg .compare-tools{display:none}
+.pg .cf .bs{grid-template-columns:1fr}
+.pg .connection-scenes{margin-top:12px}
+.pg .cf{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);column-gap:34px;border-left:0;padding-left:0;margin-top:8px;align-items:start}
+.pg .case-results{display:block;margin-top:28px}
+.pg .case-results .bs{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.pg .case-results .cf-s{margin-bottom:22px}
+.pg .cf-s{grid-column:1;padding-bottom:18px}
+.pg .cf-s::before{display:none}
+.pg .cf-design{grid-column:2;grid-row:1}
+.pg .cf-l{grid-column:1;grid-row:1}
+.pg .cf-design details{display:none}
+.pg .cf-emo .emo{font-size:26px}
+.pg .oth-h{margin:36px 0 12px}
 .pg .lp-play{display:none}
 .pg .car-h>div h2{margin-bottom:22px!important}
 .pg .sh-tag{white-space:nowrap}
@@ -60,7 +78,7 @@ html.paged *,html.paged *::before,html.paged *::after{transition:none!important;
 
   const pages = [];
   const page = (nodes, cls = "") => pages.push({ nodes: [].concat(nodes).filter(Boolean), cls });
-  const clone = n => { if (!n) return null; let c = n.cloneNode(true); if (c.tagName === "ARTICLE") { const d = document.createElement("div"); d.className = c.className; d.innerHTML = c.innerHTML; c = d; } qa("video", c).forEach(v => { if (!v.getAttribute("poster")) { v.remove(); return; } const i = document.createElement("img"); i.src = v.getAttribute("poster"); i.alt = ""; v.replaceWith(i); }); qa("article", c).forEach(x => { const d = document.createElement("div"); d.className = x.className; d.innerHTML = x.innerHTML; x.replaceWith(d); }); return c; };
+  const clone = n => { if (!n) return null; let c = n.cloneNode(true); if (c.tagName === "ARTICLE") { const d = document.createElement("div"); d.className = c.className; d.innerHTML = c.innerHTML; c = d; } qa("video", c).forEach(v => { if (q(".ba-poster", v.parentElement) || !v.getAttribute("poster")) { v.remove(); return; } const i = document.createElement("img"); i.src = v.getAttribute("poster"); i.alt = ""; v.replaceWith(i); }); qa("article", c).forEach(x => { const d = document.createElement("div"); d.className = x.className; d.innerHTML = x.innerHTML; x.replaceWith(d); }); return c; };
   const wrap = (tag, cls, kids) => { const d = document.createElement(tag); if (cls) d.className = cls; kids.filter(Boolean).forEach(k => d.appendChild(k)); return d; };
   const kick = (text) => { const p = document.createElement("p"); p.className = "kicker"; p.textContent = text; return p; };
 
@@ -97,18 +115,23 @@ html.paged *,html.paged *::before,html.paged *::after{transition:none!important;
     };
     groups.forEach(g => page([kick("AI 활용"), wrap("div", "st", [clone(head), ...g.list.map(split)])], "ai"));
   });
-  // 14–16 플레이테스트
-  const t = q("#tests .w"), tk = [...t.children];
-  const h3s = qa("h3", t).filter(h => h.parentElement === t);
-  const idx = el => tk.indexOf(el);
-  page(tk.slice(0, idx(h3s[0])).map(clone));
-  page([kick("플레이테스트"), ...tk.slice(idx(h3s[0]), idx(h3s[1])).map(clone)]);
-  page([kick("플레이테스트"), ...tk.slice(idx(h3s[1])).map(clone)]);
-  // 17 기획 가치관
-  page([...q("#values .w").children].map(clone));
-  // 시스템: 쪽마다 두 개
-  const cards = qa("#car .sc");
-  for (let i = 0; i < cards.length; i += 2) page([i === 0 ? clone(q("#systems .car-h > div")) : kick("시스템 기획"), wrap("div", "sys", cards.slice(i, i + 2).map(clone))]);
+  // 기획 가치관과 시스템: 비교 장면 쪽과 설명 쪽을 분리하고 수치는 해당 문맥에만 둔다.
+  const sws = qa("#systems > .w");
+  // 핵심 재미와 핵심 플레이 루프, 루프가 끊긴 세 곳
+  page([...sws[0].children].map(clone));
+  qa("#cview .cp").forEach(cs => {
+    const w = q(".cp-in", cs);
+    const comparison = clone(q(".ba", w));
+    comparison.removeAttribute("role"); comparison.removeAttribute("tabindex"); comparison.removeAttribute("aria-describedby"); comparison.removeAttribute("aria-pressed");
+    page([clone(q(".case-k", w)), clone(q(".case-t", w)), comparison, clone(q(".comparison-note", w))]);
+    const sections = [...q(".cf", w).children];
+    const cf = wrap("div", "cf", [wrap("div", "cf-l", sections.slice(0, 2).map(clone)), clone(q(".cf-design", w))]);
+    page([clone(q(".case-k", w)), cf]);
+    page([clone(q(".case-k", w)), wrap("div", "cf case-results", sections.slice(3).map(clone))]);
+  });
+  page([kick("시스템 기획"), ...[...sws[sws.length - 1].children].map(clone)]);
+  // 테스트 결과를 통한 피드백
+  page([...q("#tests .w").children].map(clone));
   // 마지막 담당 범위
   page([...q("#scope .w").children].map(clone));
 
