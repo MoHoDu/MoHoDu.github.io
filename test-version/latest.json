@@ -35,8 +35,8 @@
     "document": "namer/print/index.html"
   },
   "overdrive": {
-    "version": "v2",
-    "pages": 3,
+    "version": "v3",
+    "pages": 17,
     "document": "overdrive/print/index.html"
   }
 }
