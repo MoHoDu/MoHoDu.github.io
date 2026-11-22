@@ -57,6 +57,38 @@ html.paged *,html.paged *::before,html.paged *::after{transition:none!important;
 .pg .cf-design{grid-column:2;grid-row:1}
 .pg .cf-l{grid-column:1;grid-row:1}
 .pg .cf-design details{display:none}
+.pg .pf-pg{margin-top:12px;max-width:none}
+.pg .pf-pg>p{max-width:52em;margin:0 0 12px;font-size:16px;line-height:1.65}
+.pg .pf-pg .pf{max-width:none;margin:0 0 16px}
+.pg .pf-pg .pf-st{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pg .pf-pg .pf-st>li+li::before{content:"→";left:-6px;top:9px;font-size:13px}
+.pg .cf-design .pf{padding:14px;gap:8px}
+.pg .cf-design .pf-rows>li{padding:0 0 12px 34px}
+.pg .cf-design .pf-rows>li:last-child{padding-bottom:0}
+.pg .cf-design .pf-step{margin-bottom:6px;font-size:12px;min-height:22px}
+.pg .cf-design .pf-step b{font-size:13px}
+.pg .cf-design .pf-step i{width:22px;height:22px;font-size:12px}
+.pg .cf-design .pf-rows>li::before{left:10px;top:26px}
+.pg .cf-design .pf-rows>li::after{left:5px}
+.pg .cf-design .pf-shots{gap:8px}
+.pg .cf-design .pf-shots,.pg .cf-design .pf-shots.n2,.pg .cf-design .pf-shots.n1{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pg .cf-design .pf figcaption{font-size:11.5px;margin-top:4px}
+.pg .beat{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);column-gap:34px;align-items:start}
+.pg .beat-h{grid-column:1/-1}
+.pg .beat .cf-s{grid-column:1}
+.pg .beat .cf-design{grid-column:2;grid-row:2/span 2}
+.pg .beat-1{display:block}
+.pg .beat-1 .cf-s{padding-bottom:16px}
+.pg .beat-1 .cf-s p{max-width:none}
+.pg .beat-results .bs{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pg .beat-results{margin-top:24px}
+.pg .beat-results p{max-width:48em}
+.pg .beat-2 p{font-size:16px;line-height:1.65}
+.pg .beat-2 .df{padding:14px}
+.pg .beat-2 .pov{gap:8px}
+.pg .beat-2 .st5{gap:4px}
+.pg .beat-2 .st5 li{padding:8px 6px}
+.pg .beat-bridge{margin:0 0 14px}
 .pg .cf-emo .emo{font-size:26px}
 .pg .oth-h{margin:36px 0 12px}
 .pg .lp-play{display:none}
@@ -124,14 +156,42 @@ html.paged *,html.paged *::before,html.paged *::after{transition:none!important;
     const comparison = clone(q(".ba", w));
     comparison.removeAttribute("role"); comparison.removeAttribute("tabindex"); comparison.removeAttribute("aria-describedby"); comparison.removeAttribute("aria-pressed");
     page([clone(q(".case-k", w)), clone(q(".case-t", w)), comparison, clone(q(".comparison-note", w))]);
+    // 두 흐름 사례: 구조 설계와 외부 결과를 분리해 도식·수치가 지나치게 축소되지 않게 한다.
+    if (q(".cf-beats", w)) {
+      const beats = qa(".beat", w), bridge = q(".beat-bridge", w);
+      const first = clone(beats[0]), result = q(".cf-beat-result", first);
+      result.remove();
+      page([clone(q(".case-k", w)), first]);
+      page([clone(q(".case-k", w)), clone(q(".beat-h", beats[0])), wrap("div", "beat-results", [result]), clone(bridge)]);
+      page([clone(q(".case-k", w)), clone(beats[1]), clone(q(".cf-next", w))]);
+      return;
+    }
     const sections = [...q(".cf", w).children];
-    const cf = wrap("div", "cf", [wrap("div", "cf-l", sections.slice(0, 2).map(clone)), clone(q(".cf-design", w))]);
+    const design = q(".cf-design", w);
+    // 문단별 도식이 있는 설계는 첫 문단과 도식만 문제 옆에 두고, 나머지 문단·도식은 다음 쪽에 넓게 싣는다.
+    if (q(".pf", design)) {
+      const kids = [...design.children].filter(e => e.tagName !== "DETAILS");
+      const chunks = [[]];
+      kids.forEach(e => { chunks[chunks.length - 1].push(e); if (e.classList.contains("pf")) chunks.push([]); });
+      const tail = chunks.pop();
+      if (tail.length) chunks[chunks.length - 1].push(...tail);
+      page([clone(q(".case-k", w)), wrap("div", "cf", [wrap("div", "cf-l", sections.slice(0, 2).map(clone)), wrap("div", "cf-s cf-design", chunks[0].map(clone))])]);
+      chunks.slice(1).forEach(c => page([clone(q(".case-k", w)), wrap("div", "pf-pg", c.map(clone))]));
+      page([clone(q(".case-k", w)), wrap("div", "cf case-results", sections.slice(3).map(clone))]);
+      return;
+    }
+    const cf = wrap("div", "cf", [wrap("div", "cf-l", sections.slice(0, 2).map(clone)), clone(design)]);
     page([clone(q(".case-k", w)), cf]);
     page([clone(q(".case-k", w)), wrap("div", "cf case-results", sections.slice(3).map(clone))]);
   });
   page([kick("시스템 기획"), ...[...sws[sws.length - 1].children].map(clone)]);
-  // 테스트 결과를 통한 피드백
-  page([...q("#tests .w").children].map(clone));
+  // 동선 로그는 한 쪽, 설문 화면은 두 장씩 분리하고 기획 판단을 이어 싣는다.
+  const testW = q("#tests .w"), shots = qa("#testEvidence .test-shot", testW);
+  page([kick("테스트 결과를 통한 피드백"), clone($("testLog"))]);
+  for (let i = 0; i < shots.length; i += 2) {
+    page([kick("테스트 결과를 통한 피드백"), clone($("testHead")), wrap("div", "test-evidence", shots.slice(i, i + 2).map(clone)), clone(q(".test-source", testW))]);
+  }
+  page([kick("테스트 결과를 통한 피드백"), clone($("testReading"))]);
   // 마지막 담당 범위
   page([...q("#scope .w").children].map(clone));
 

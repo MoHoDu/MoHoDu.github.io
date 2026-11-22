@@ -486,12 +486,12 @@ section.ai{padding-bottom:56px}
 .ba .ba-poster{z-index:1;opacity:1}
 .ba.playing .ba-poster{opacity:0;pointer-events:none}
 .ba-cue{padding:8px 14px;background:var(--deep);color:#fff;font-size:13px;line-height:1.5;min-height:3em;display:flex;align-items:center}
-.compare-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:10px 0 0}
-.compare-toggle{font:inherit;font-size:13px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:var(--card);color:var(--ink);cursor:pointer}
-.compare-toggle:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+/* 재생 안내는 화면에서 숨기고 화면 낭독기에만 상태를 알린다. */
+.compare-tools{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .compare-hint,.comparison-note{font-size:13px;color:var(--muted);margin:0}
 .comparison-note{margin-top:10px;max-width:75ch}
 .cf .bs{grid-template-columns:1fr;margin:18px 0 8px}
+.cf-beats .bs{max-width:820px}
 .cf .bs-bar .post{transform:none}
 .connection-scenes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 0}
 .connection-scenes figure{margin:0}
@@ -543,8 +543,8 @@ section.ai{padding-bottom:56px}
 .bs-note{margin:10px 0 0}
 .cf{margin-top:36px;display:grid;gap:0;border-left:2px solid var(--line);padding-left:26px}
 .cf-s{position:relative;padding:0 0 26px}
-.cf-s::before{content:"";position:absolute;left:-33px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
-.cf-tag{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:6px}
+.cf-s::before{content:"";position:absolute;left:-33px;top:10px;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.cf-tag{display:block;width:fit-content;font-size:13px;line-height:20px;font-weight:700;color:var(--accent);margin-bottom:6px}
 .cf-s p{margin:0;max-width:44em}
 .cf-s p+p{margin-top:12px}
 .cf-emo .emo{font-family:"Hahmlet",serif;font-weight:500;font-size:clamp(22px,2.6vw,30px);line-height:1.4;color:var(--ink)}
@@ -553,10 +553,190 @@ section.ai{padding-bottom:56px}
 .cf-design details{margin-top:12px;font-size:15px}
 .cf-design summary{cursor:pointer;color:var(--muted);font-weight:500}
 .cf-design details ul{margin:8px 0 0;padding-left:18px}
+/* 01 사례: 참여 기회와 상태 인지를 연결하되 개발 시점의 선후로 단정하지 않는다. */
+.beat{position:relative;padding:0 0 8px}
+.beat-h{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-family:"Hahmlet",serif;font-size:clamp(20px,2.2vw,24px);line-height:1.35}
+.beat-h i{flex:none;font-style:normal;font-family:"Noto Sans KR",sans-serif;font-size:13px;font-weight:700;color:#fff;background:var(--accent);border-radius:999px;padding:2px 10px}
+.beat-bridge{margin:6px 0 30px;padding:16px 20px;border-radius:14px;background:color-mix(in srgb,var(--spot) 14%,var(--card));font-family:"Hahmlet",serif;font-weight:500;font-size:clamp(17px,1.9vw,20px);line-height:1.5;max-width:40em}
+.beat-bridge::before{content:"함께 해결할 문제";display:block;font-family:"Noto Sans KR",sans-serif;font-size:12.5px;font-weight:700;color:var(--spot);margin-bottom:4px}
+.fc{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.fc li{position:relative;padding:12px 12px 13px;border-radius:12px;background:var(--bg);font-size:14px;line-height:1.45;font-weight:500;display:flex;flex-direction:column;gap:3px}
+.fc li small{font-size:12.5px;font-weight:400;color:var(--muted)}
+.fc li+li::before{content:"→";position:absolute;left:-17px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:400}
+.fc li.ok{background:color-mix(in srgb,var(--accent) 16%,var(--card))}
+.fc li.old{background:color-mix(in srgb,#E0566C 12%,var(--card))}
+.fc-branch{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13.5px;color:var(--muted)}
+.fc-branch b{font-weight:500;color:var(--ink);padding:5px 11px;border-radius:10px;background:color-mix(in srgb,#E0566C 12%,var(--card))}
+.ff{display:grid;gap:10px;margin-top:4px}
+html:not(.paged) .df-rescue .ff{display:none}
+html.paged .sim{display:none}
+html:not(.paged) .df-stages .st5,html:not(.paged) .ff-cut{display:none}
+.sim-cut{margin-top:4px}
+.sim{display:grid;gap:12px}
+.sim-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.sim-tab{font:inherit;font-size:13.5px;font-weight:500;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
+.sim-tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.sim-tab:focus-visible,.sim-btn:focus-visible,.sim-range input:focus-visible{outline:2px solid var(--spot);outline-offset:2px}
+.sim-panel{display:grid;gap:10px}
+.sim-panel[hidden],.sim-meter[hidden]{display:none}
+@media (max-width:760px){.sim-chip{font-size:12.5px;padding:5px 9px}.sim-hud{left:8px;top:8px}.sim-btn{font-size:13px;padding:8px 12px}}
+.sim-stage{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:12px;overflow:hidden;background:#000}
+.sim-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .25s ease}
+.sim-stage img.on{opacity:1}
+.sim-hud{position:absolute;left:12px;top:12px;right:12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;pointer-events:none}
+.sim-chip{margin:0;padding:6px 11px;border-radius:9px;background:rgba(20,19,40,.84);color:#fff;font-size:14px;font-weight:700;line-height:1.4}
+.sim-chip.bad{background:rgba(196,58,82,.94)}
+.sim-chip.ok{background:rgba(58,64,176,.94)}
+.sim-meter{width:min(220px,60%);height:6px;border-radius:99px;background:rgba(255,255,255,.28);overflow:hidden}
+.sim-meter i{display:block;height:100%;width:100%;background:#fff;transform-origin:left;transform:scaleX(1)}
+.sim-ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-height:44px}
+.sim-btn{position:relative;overflow:hidden;font:inherit;font-size:14px;font-weight:700;color:#fff;background:var(--accent);border:1px solid var(--accent);border-radius:10px;padding:9px 15px;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none}
+.sim-btn span{position:relative}
+.sim-btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.sim-btn:disabled{opacity:.42;cursor:default}
+.sim-hold i{position:absolute;inset:0;background:rgba(255,255,255,.3);transform-origin:left;transform:scaleX(0)}
+.sim-opt{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted)}
+.sim-note{margin:0;font-size:13.5px;line-height:1.55;color:var(--muted)}
+.sim-range{display:grid;gap:6px;align-items:stretch}
+.sim-range label{font-size:13.5px;font-weight:700;color:var(--ink)}
+.sim-range output{margin-left:6px;color:var(--accent);font-variant-numeric:tabular-nums}
+.sim-range input{width:100%;accent-color:var(--accent);margin:0}
+.sim-scale{position:relative;height:18px;font-size:12px;color:var(--muted)}
+.sim-scale span{position:absolute;top:0;transform:translateX(-50%)}
+.sim-scale span:first-child{left:0;transform:none}
+.sim-scale span:last-child{transform:translateX(-100%)}
+.sim-stats{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0 0 0 6px;font-size:13px}
+.sim-stats div{display:flex;gap:6px}
+.sim-stats dt{color:var(--muted)}
+.sim-stats dd{margin:0;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.sim-stage img{transition:none}}
+.ff-h{margin:4px 0 0;font-size:13.5px;font-weight:700;color:var(--ink)}
+.ff-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+.ff-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.ff-row .ok figcaption b{color:var(--accent)}
+.ff-fork>:nth-child(2)::before{content:"→";position:absolute;left:-11px;top:28%;transform:translateX(-50%);color:var(--muted)}
+.ff-row figure{margin:0;position:relative}
+.ff-row img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;display:block;background:#000}
+.ff-row figcaption{margin-top:6px;font-size:12.5px;line-height:1.45;color:var(--muted);display:flex;flex-direction:column}
+.ff-row figcaption b{color:var(--ink);font-weight:700;font-size:13px}
+.ff-row .end figcaption b,.ff-end b{color:#E0566C}
+.ff-seq>*+*::before{content:"→";position:absolute;left:-11px;top:28%;transform:translateX(-50%);color:var(--muted)}
+.ff-end{position:relative;align-self:start;box-sizing:border-box;width:100%;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:12px;border-radius:10px;background:color-mix(in srgb,#E0566C 12%,var(--card));font-size:13px;line-height:1.45;aspect-ratio:16/9}
+@media (max-width:760px){.ff-row,.ff-4{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-seq>*+*::before,.ff-fork>:nth-child(2)::before{display:none}}
+.risk{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px;flex:1;font-size:13.5px}
+.risk li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+.risk li b{font-weight:500;white-space:nowrap}
+.risk li.end b{color:#E0566C}
+.pov{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.pov.single{grid-template-columns:minmax(0,1fr);max-width:520px}
+.prob-fig{margin:12px 0 0;max-width:520px}
+.df-stages .pov.single{max-width:620px}
+.df-sim-box{margin-top:14px}
+.df-sim-box .sim-cut{margin-top:0}
+.prob-fig img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;display:block;background:#000}
+.prob-fig figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);line-height:1.45}
+.prob-fig figcaption b{color:var(--ink);font-weight:700;margin-right:4px}
+.pov figure{margin:0}
+.pov img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;display:block;background:#000}
+.pov figcaption{margin-top:6px;font-size:12.5px;color:var(--muted);line-height:1.45}
+.pov figcaption b{color:var(--ink);font-weight:700;margin-right:4px}
+.st5{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.st5 li{display:flex;flex-direction:column;gap:4px;padding:10px 10px 12px;border-radius:10px;background:var(--bg);font-size:13px;line-height:1.4}
+.st5 li i{font-style:normal;font-family:"Hahmlet",serif;font-weight:700;font-size:20px;color:var(--accent)}
+.st5 li b{font-size:14px}
+.st5 li span{color:var(--muted)}
+.st5 li.end{background:color-mix(in srgb,#E0566C 12%,var(--card))}
+.st5 li.end i{color:#E0566C}
+.df-list{margin:0;padding-left:18px;display:grid;gap:2px}
+@media (max-width:760px){.fc{grid-template-columns:1fr;gap:20px}.fc li+li::before{content:"↓";left:50%;top:-18px;transform:translateX(-50%)}.risk,.pov{grid-template-columns:1fr}.st5{grid-template-columns:repeat(2,minmax(0,1fr))}.st5 li.end{grid-column:span 2}}
 .df{margin:16px 0 0;padding:18px 20px;border-radius:14px;background:var(--card);display:grid;gap:14px;max-width:820px}
 .df-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 .df-k{flex:0 0 44px;font-size:13px;color:var(--muted)}
 .df-note{margin:0;font-size:14px;color:var(--muted)}
+/* 02 추격 사례 문단별 도식 */
+.pf{gap:12px}
+.cf-design .pf+p{margin-top:18px}
+.pf .ff-h{margin:0}
+.pf-flow{max-width:none}
+.pf-rows{list-style:none;margin:0;padding:0;display:grid}
+.pf-rows>li{position:relative;padding:0 0 22px 40px}
+.pf-rows>li:last-child{padding-bottom:0}
+.pf-rows>li::before{content:"";position:absolute;left:12px;top:30px;bottom:12px;width:2px;border-radius:2px;background:color-mix(in srgb,var(--accent) 40%,var(--line))}
+.pf-rows>li::after{content:"";position:absolute;left:7px;bottom:4px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid color-mix(in srgb,var(--accent) 40%,var(--line))}
+.pf-rows>li:last-child::before,.pf-rows>li:last-child::after{display:none}
+.pf-step{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;min-height:26px;margin-bottom:10px;font-size:13.5px;line-height:1.45;color:var(--muted)}
+.pf-step b{color:var(--ink);font-size:15px}
+.pf-step i{position:absolute;left:0;top:0;font-style:normal;font-weight:700;font-size:13px;color:#fff;background:var(--accent);width:26px;height:26px;border-radius:50%;display:grid;place-items:center}
+.pf-rows>li.hot .pf-step i{background:#E0566C}
+.pf-shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.pf-shots.n2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pf-shots.n1{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pf img{cursor:zoom-in}
+.pf-zoom{border:0;padding:0;background:transparent;max-width:none;max-height:none;overflow:visible}
+.pf-zoom::backdrop{background:rgba(10,9,24,.84)}
+.pf-zoom img{display:block;width:min(94vw,1280px);max-height:88vh;object-fit:contain;border-radius:10px;cursor:zoom-out}
+.pf-zoom p{margin:8px 0 0;color:#ECECF7;font-size:14px;text-align:center}
+.pf-zoom button{position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;border:0;background:#fff;color:#1B1A33;font-size:20px;line-height:1;cursor:pointer}
+.pf-zoom button:focus-visible{outline:2px solid var(--spot);outline-offset:2px}
+.pf figure{margin:0}
+.pf figure img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;display:block;background:#000}
+.pf figcaption{margin-top:6px;font-size:12.5px;line-height:1.45;color:var(--muted);display:flex;flex-direction:column}
+.pf figcaption b{color:var(--ink);font-weight:700;font-size:13px}
+.pf-eye .ff-row figure:nth-child(2) figcaption b{color:#B07A00}
+.pf-eye .ff-row figure:nth-child(3) figcaption b{color:#D0384F}
+.pf-stage,.pf-eye{max-width:none}
+.pf-st{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px}
+.pf-st>li{position:relative;display:flex;flex-direction:column;gap:7px;min-width:0}
+.pf-st>li:nth-child(2n)::before{content:"→";position:absolute;left:-14px;top:7px;transform:translateX(-50%);color:var(--muted);font-size:14px}
+.pf-st-h{display:flex;align-items:baseline;gap:6px;padding:6px 10px;border-radius:9px;background:color-mix(in srgb,var(--accent) 10%,var(--card))}
+.pf-st-h b{font-size:13.5px;color:var(--ink)}
+.pf-st-h span{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pf-st>li.hot .pf-st-h{background:color-mix(in srgb,#E0566C 14%,var(--card))}
+.pf-st img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;display:block;background:#000}
+.pf-lux{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.pf-lux i{display:block;height:100%;width:calc(var(--l) * 100%);border-radius:99px;background:color-mix(in srgb,#E0566C calc(var(--t) * 250%),#E8B84A)}
+.pf-st dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 8px;font-size:12.5px;line-height:1.45}
+.pf-st dt{color:var(--muted)}
+.pf-st dd{margin:0;color:var(--ink)}
+html:not(.paged) .pf-st{display:none}
+.st-sim{gap:14px}
+.st-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.st-step{position:relative;font:inherit;text-align:left;display:grid;grid-template-columns:auto 1fr;align-items:baseline;gap:2px 8px;padding:10px 12px 11px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer;transition:background .25s,border-color .25s,color .25s}
+.st-step i{grid-row:1/span 2;align-self:center;width:10px;height:10px;border-radius:50%;border:2px solid var(--line);background:var(--card);transition:background .25s,border-color .25s}
+.st-step b{font-size:14px;color:var(--ink)}
+.st-step span{font-size:12.5px;font-variant-numeric:tabular-nums}
+.st-step+.st-step::before{content:"";position:absolute;left:-9px;top:50%;width:10px;height:2px;background:var(--line)}
+.st-step.past{border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.st-step.past i{background:color-mix(in srgb,var(--accent) 55%,var(--card));border-color:transparent}
+.st-step.past+.st-step::before{background:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.st-step[aria-selected="true"]{background:color-mix(in srgb,var(--accent) 12%,var(--card));border-color:var(--accent);color:var(--ink)}
+.st-step[aria-selected="true"] i{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+.st-step.hot[aria-selected="true"]{background:color-mix(in srgb,#E0566C 12%,var(--card));border-color:#E0566C}
+.st-step.hot[aria-selected="true"] i{background:#E0566C;border-color:#E0566C;box-shadow:0 0 0 4px color-mix(in srgb,#E0566C 22%,transparent)}
+.st-step:focus-visible{outline:2px solid var(--spot);outline-offset:2px}
+.st-read{display:grid;gap:10px}
+.st-lux{display:grid;grid-template-columns:auto minmax(0,1fr) 3.2em;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.st-lux b{color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+.st-bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.st-bar i{display:block;height:100%;width:70%;border-radius:99px;background:#E8B84A;transition:width .6s ease,background-color .6s ease}
+.st-rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px}
+.st-rows>div{display:grid;gap:6px;align-content:start}
+.st-rows b{font-size:13px;color:var(--muted);font-weight:500}
+.st-rows ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.st-rows li{font-size:13px;line-height:1.4;padding:5px 10px;border-radius:999px;background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.st-rows li.new{background:color-mix(in srgb,var(--accent) 12%,var(--card));border-color:color-mix(in srgb,var(--accent) 45%,var(--line));font-weight:700}
+.st-rows li.new::before{content:"변화";margin-right:6px;font-size:11px;font-weight:700;color:var(--accent)}
+.st-play[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.st-bar i,.st-step,.st-step i{transition:none}}
+@media (max-width:720px){.st-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.st-step:nth-child(3)::before{display:none}.st-rows{grid-template-columns:1fr}}
+@media (max-width:720px){
+  .pf-rows>li{padding-left:34px}
+  .pf-shots.n3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pf-shots.n1{grid-template-columns:1fr}
+  .pf-st{grid-template-columns:1fr}
+  .pf-st>li:nth-child(2n)::before{display:none}
+}
+
 .df-steps{list-style:none;margin:0;padding:0;display:flex;flex:1;gap:6px;min-width:0}
 .df-steps li{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border-radius:10px;background:var(--bg);font-size:13px;text-align:center}
 .df-steps i{font-style:normal;font-family:"Hahmlet",serif;font-weight:700;font-size:18px;color:var(--accent)}
@@ -586,14 +766,41 @@ section.ai{padding-bottom:56px}
 .sp i{font-style:normal;font-size:12.5px;padding:6px 8px;line-height:1.4;background:color-mix(in srgb,var(--accent) 26%,var(--card))}
 .sp i+i{background:color-mix(in srgb,var(--accent) 16%,var(--card))}
 .sp i+i+i{background:color-mix(in srgb,var(--accent) 9%,var(--card))}
-.oth-h{margin:88px 0 14px}
-.oth{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-@media (max-width:860px){.oth{grid-template-columns:1fr}}
-.oth > *{background:var(--card);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.oth-h{margin:8px 0 14px}
+.oth{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 14px}
+.oth > *{min-width:0;background:var(--card);border-radius:14px;padding:22px 20px;display:grid;grid-template-rows:auto auto 1fr auto;row-gap:20px}
+@supports (grid-template-rows:subgrid){.oth > *{grid-row:span 4;grid-template-rows:subgrid}}
+.oth-head{display:grid;align-content:start;gap:6px}
 .oth b{font-size:17px}
 .oth .tg{font-size:13px;color:var(--accent);font-weight:700}
-.oth p{margin:0;font-size:14.5px;color:var(--muted)}
-.oth p.res{color:var(--ink);background:var(--bg);border-radius:10px;padding:10px 12px;margin-top:auto}
+.oth p{margin:0;font-size:14.5px;line-height:1.8;color:var(--muted)}
+.oth p.res{display:flex;align-items:center;color:var(--ink);background:var(--bg);border-radius:10px;padding:14px 16px;margin:0}
+.oth-v{margin:0;min-width:0;align-self:start}
+@media (max-width:860px){.oth{grid-template-columns:1fr;row-gap:24px}.oth > *{grid-row:auto;grid-template-rows:auto auto auto auto}}
+.oth-v video,.oth-v img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;display:block;background:#000}
+.oth-img{cursor:zoom-in;object-fit:contain!important;background:#11202b!important}
+.oth-v figcaption{margin-top:6px;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.oth-poster{display:none!important}
+html.paged .oth-v video{display:none}
+html.paged .oth-poster{display:block!important}
+.test-log{margin:28px 0 40px}
+.test-log .test-shot{width:100%;max-width:none;margin:0}
+.test-log .test-shot img{aspect-ratio:16/10;object-fit:cover;object-position:center 35%}
+.pg .test-log{margin:12px 0}
+.pg .test-log .test-shot{max-width:760px;margin-inline:auto}
+.pg .test-log img{aspect-ratio:auto;max-height:380px;object-fit:contain}
+.test-evidence{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px;margin:28px 0 16px}
+.test-shot{min-width:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.test-shot button{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card);cursor:zoom-in}
+.test-shot button:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.test-shot img{display:block;width:100%;height:auto}
+.test-shot figcaption{font-size:14px;line-height:1.7;color:var(--muted)}
+.test-shot figcaption b{display:block;color:var(--ink);font-size:17px;margin-bottom:5px}
+.test-reading{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;margin:32px 0;padding:28px 0;border-block:1px solid var(--line)}
+.test-reading h3{font-size:20px;margin:0 0 12px}
+.test-reading p{margin:0;line-height:1.85}
+.test-flow-head{margin:30px 0 12px}
+@media(max-width:720px){.test-evidence,.test-reading{grid-template-columns:1fr}}
 .fb{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
 @media (max-width:860px){.fb{grid-template-columns:1fr}}
 .fb-c{background:var(--card);border-radius:14px;padding:22px}
@@ -674,7 +881,7 @@ section.ai{padding-bottom:56px}
 <body>
 <nav class="nav" id="nav">
   <b>모호성</b>
-  <a class="hide" href="#about">게임 개요</a><a class="hide" href="#ai">AI 활용</a><a class="hide" href="#systems">기획/시스템</a><a class="hide" href="#tests">테스트</a>
+  <a class="hide" href="#about">게임 개요</a><a class="hide" href="#ai">AI 활용</a><a class="hide" href="#systems">기획/시스템</a><a class="hide" href="#tests">테스트</a><a class="hide" href="#scope">담당 범위</a>
   <span class="sp"><a href="pdf/">PDF</a><button type="button" id="theme">테마 전환</button></span>
 </nav>
 
@@ -737,7 +944,7 @@ section.ai{padding-bottom:56px}
   <section id="tests">
     <div class="w">
       <p class="kicker">테스트 결과를 통한 피드백</p>
-      <h2 class="nar" id="testHead"></h2>
+      <h2 class="nar" id="testHead" style="white-space:pre-line;max-width:none"></h2>
       <div class="fb" id="fb"></div>
     </div>
   </section>
@@ -745,9 +952,9 @@ section.ai{padding-bottom:56px}
   <section id="scope" style="padding-top:20px">
     <div class="w">
       <p class="kicker">담당 범위</p>
-      <h2>제 작업과 팀원의 작업</h2>
+      <h2>담당 작업 범위</h2>
       <div class="scope">
-        <div class="card"><h3>제 작업</h3><ul id="mine"></ul></div>
+        <div class="card"><h3>담당한 작업</h3><ul id="mine"></ul></div>
         <div class="card"><h3>다른 팀원의 작업</h3><ul id="others"></ul></div>
       </div>
       <p class="small nar" id="scopeNote" style="margin-top:16px"></p>
@@ -1057,40 +1264,329 @@ section.ai{padding-bottom:56px}
       <div class="df-row"><b class="df-k">구조</b><ol class="df-flow"><li>줄에서 떨어짐</li><li><b>7초</b> 동안 매달림</li><li>동료가 <b>2초</b> 눌러 끌어올림</li><li class="ok">공연 계속</li></ol></div>
       <div class="df-row"><b class="df-k">대포</b><ol class="df-flow"><li>인간 대포에서 추락</li><li class="ok">즉사 대신 두 곳 부상</li></ol></div>
     </figure>`
-    : k === "pursuit" ? `<figure class="df df-pur">
-      <div class="df-tl"><div class="seg safe"><b>정비 시간 300초</b><span>탐색과 정비</span></div><div class="seg"><b>만료</b><span>마네킹이 깨어남</span></div><div class="seg"><b>+1분마다</b><span>시야가 넓어짐</span></div><div class="seg"><b>+2분</b><span>벽 너머 감지</span></div><div class="seg hot"><b>+3분</b><span>가장 가까운 단원 추격</span></div></div>
-      <div class="df-row"><b class="df-k">알림</b><ul class="df-chips"><li>순찰</li><li class="mid">의심</li><li class="hot">추격</li></ul><span class="df-note" style="margin:0">추격자 발밑의 빛 색으로 지금 상태를 알립니다</span></div>
-      <div class="df-row"><b class="df-k">규칙</b><ol class="df-flow"><li class="old">안전 구역에서는 시간 멈춤</li><li class="ok">어디에 있든 시간이 끝나면 추격</li></ol></div>
-    </figure>`
+    : k === "pursuit" ? ""
     : `<figure class="df df-loop">
       <div class="df-row"><b class="df-k">재사용</b><ol class="df-flow"><li>공연에서 기믹 학습</li><li>대기실 탐색에 활용</li><li class="ok">탈출로의 다른 위험에 응용</li></ol></div>
       <div class="df-row"><b class="df-k">발견</b><ol class="df-flow"><li>대포·트램펄린 발견</li><li>인간 대포 해금</li><li>리허설과 자유 연습</li><li class="ok">다음 공연</li></ol></div>
-      <p class="df-note">게임 흐름과 공간 간 규칙의 연결 의도입니다. 공간·무대·탈출로는 각 담당 팀원이 제작했습니다.</p>
     </figure><div class="connection-scenes"><figure><img src="media/compare-practice-cannon.jpg" alt="연습실에서 대포와 트램펄린을 사용하는 모습"><figcaption>연습실 · 대포와 트램펄린 사용</figcaption></figure><figure><img src="media/compare-escape-trampoline.jpg" alt="탈출로의 트램펄린과 높은 발판"><figcaption>탈출로 · 익힌 기믹으로 높은 발판 진입</figcaption></figure></div>`;
+  // 02 추격 사례 문단별 도식. 장면은 11월 19·20일 플레이 녹화, 수치는 WaitingRoomSettings 설정값과 일치시킨다.
+  const purShot = (src, b, t, alt) => `<figure><img src="media/${src}.jpg" alt="${alt}" loading="lazy"><figcaption><b>${b}</b>${t ? `<span>${t}</span>` : ""}</figcaption></figure>`;
+  const purStages = [
+    ["1단계", "추격 시작", "pur-stage1", ["시야 5m"], ["조명 70%", "가끔 지직임"], .7, 0, "추격자가 움직이기 시작했다는 안내가 뜬 화물 적재 구역"],
+    ["2단계", "+30초", "pur-stage2", ["시야 8m"], ["조명 45%", "시작할 때 3번 깜빡임과 스파크"], .45, 0, "추격자의 시야 반경이 크게 늘어난다는 안내가 뜬 장면"],
+    ["3단계", "+60초", "pur-stage3", ["시야 10m", "벽 너머까지 감지"], ["조명 25%", "붉은빛", "약 10초마다 방 전체 깜빡임"], .25, .2, "추격자가 벽 뒤까지 투시한다는 안내가 뜬 어두운 장면"],
+    ["4단계", "+90초", "pur-stage4", ["시야 20m", "모든 위치를 알고 가장 가까운 단원 추격"], ["조명 25%", "더 짙은 붉은빛", "약 5초마다 방 전체 깜빡임"], .25, .4, "추격자가 모든 위치를 안다는 안내와 붉게 물든 화면"]];
+  const purFig = k => k === "flow" ? `<figure class="df pf pf-flow">
+      <p class="ff-h">쉬는 시간의 진행 흐름</p>
+      <ol class="pf-rows">
+        <li><div class="pf-step"><i>1</i><b>남은 시간 경고</b><span>1분, 30초, 10초 전</span></div><div class="pf-shots n3">${purShot("pur-flow-warn60", "1분 남음", "끝나면 추격이 시작된다는 알림", "쉬는 시간 1분 남음 경고 배너")}${purShot("pur-flow-notice", "30초 남음", "정체는 밝히지 않고 공연장까지 가라는 안내", "시간이 지나면 추격자가 나타난다는 안내와 멈춰 있는 마네킹")}${purShot("pur-flow-warn10", "10초 남음", "곧 추격이 시작된다는 알림", "쉬는 시간 10초 남음 경고 배너")}</div></li>
+        <li><div class="pf-step"><i>2</i><b>추격자 각성과 추격 시작</b><span>전시 마네킹이 움직임</span></div><div class="pf-shots n2">${purShot("pur-flow-wake", "추격 경보", "마네킹이 움직이기 시작", "추격자가 움직이기 시작했다는 경보와 아래쪽 마네킹")}${purShot("pur-flow-chase", "추격당함", "빨간 눈의 마네킹이 뒤쫓아옴", "빨간 눈 표시가 뜬 마네킹이 토끼 단원을 쫓는 장면")}</div></li>
+        <li class="hot"><div class="pf-step"><i>3</i><b>도주</b><span>공연장, 탈출로 입구로 도망</span></div><div class="pf-shots n1">${purShot("pur-flow-escape", "공연장 입구로", "대기실 통로를 지나 공연장으로", "붉은 화면 가장자리 속에 공연장 입구 통로를 달리는 곰 단원")}</div></li>
+      </ol>
+    </figure>`
+    : k === "eye" ? `<figure class="df pf pf-eye">
+      <p class="ff-h">순찰, 의심, 추격에 따른 추격자 상태 변화</p>
+      <div class="ff-row">${purShot("pur-eye-patrol", "순찰", "흰 눈을 감은 채 돌아다님", "계단 위 마네킹 머리 위에 감은 흰 눈 표시")}${purShot("pur-eye-suspect", "의심", "소리를 들으면 노란 눈을 뜨고 조사", "계단 위 마네킹 머리 위에 뜬 노란 눈 표시")}${purShot("pur-eye-chase", "추격", "나를 쫓으면 빨간 눈, 화면 가장자리가 붉어짐", "빨간 눈 표시를 띄운 마네킹과 붉어진 화면 가장자리")}</div>
+    </figure>`
+    : k === "stage" ? `<figure class="df pf pf-stage">
+      <p class="ff-h">시간에 따른 추격자 단계와 연출 변화</p>
+      <div class="sim st-sim" data-st-sim>
+        <div class="st-steps" role="tablist" aria-label="추격 단계 고르기">${purStages.map(([n, t], i) => `<button type="button" class="st-step${i === 3 ? " hot" : ""}" role="tab" aria-selected="${i === 0}" data-i="${i}"><i></i><b>${n}</b><span>${t}</span></button>`).join("")}</div>
+        <div class="sim-stage">${purStages.map(([, , src, , , , , alt], i) => `<img data-s="${i}"${i === 0 ? ' class="on"' : ""} src="media/${src}.jpg" alt="${alt}">`).join("")}<div class="sim-hud"><p class="sim-chip" data-chip>1단계 · 추격 시작</p></div></div>
+        <div class="st-read">
+          <div class="st-lux"><span>방 조명</span><div class="st-bar"><i data-lux></i></div><b data-lux-v>70%</b></div>
+          <div class="st-rows"><div><b>추격자</b><ul data-rule></ul></div><div><b>연출</b><ul data-fx></ul></div></div>
+        </div>
+        <div class="sim-ctrl">
+          <button type="button" class="sim-btn ghost" data-act="prev">이전 단계</button>
+          <button type="button" class="sim-btn" data-act="next">다음 단계</button>
+          <button type="button" class="sim-btn ghost st-play" data-act="play" aria-pressed="false">처음부터 자동 재생</button>
+        </div>
+      </div>
+      <ol class="pf-st">${purStages.map(([n, t, src, rule, fx, lux, tint, alt], i) => `<li class="${i === 3 ? "hot" : ""}"><div class="pf-st-h"><b>${n}</b><span>${t}</span></div><img src="media/${src}.jpg" alt="${alt}" loading="lazy"><div class="pf-lux" style="--l:${lux};--t:${tint}" title="조명 밝기와 붉은빛"><i></i></div><dl><dt>추격자</dt><dd>${rule.join("<br>")}</dd><dt>연출</dt><dd>${fx.join("<br>")}</dd></dl></li>`).join("")}</ol>
+    </figure>`
+    : "";
+  // 01 사례 흐름별 도식. 수치는 게임 설정값(BaseGameSettings·TightropeSettings)과 일치시킨다.
+  const beatFig = k => k === "rescue" ? `<figure class="df df-rescue">
+      <div class="sim" data-sim>
+        <div class="sim-tabs" role="tablist" aria-label="부상과 구조 조작해 보기">
+          <button type="button" class="sim-tab" role="tab" aria-selected="true" data-tab="bal">외줄 매달리기와 끌어올리기</button>
+          <button type="button" class="sim-tab" role="tab" aria-selected="false" data-tab="fall">추락에 따른 부상</button>
+        </div>
+        <div class="sim-panel" data-panel="bal" role="tabpanel">
+          <div class="sim-stage">
+            <img data-s="idle" class="on" src="media/rope-idle.jpg" alt="토끼 단원이 외줄 위를 걷고 있다">
+            <img data-s="tilt" src="media/rope-tilt.jpg" alt="토끼 단원이 한쪽으로 기울고 균형 막대가 빨간 구간에 있다">
+            <img data-s="hang" src="media/rope-hang-sim.jpg" alt="토끼 단원이 줄에 매달려 버티고 있다">
+            <img data-s="pull" src="media/rope-rescue-sim.jpg" alt="곰 단원이 매달린 토끼 단원을 끌어올리고 있다">
+            <img data-s="back" src="media/rope-back.jpg" alt="토끼와 곰 단원이 다시 줄 위에 서 있다">
+            <img data-s="drop" src="media/rope-drop.jpg" alt="토끼 단원이 줄을 놓치고 아래로 떨어지고 있다">
+            <div class="sim-hud"><p class="sim-chip" data-chip>줄 위에서 균형을 잡는 중</p><div class="sim-meter" data-meter hidden><i data-meter-fill></i></div></div>
+          </div>
+          <div class="sim-ctrl">
+            <button type="button" class="sim-btn" data-act="tilt">균형 잃기</button>
+            <button type="button" class="sim-btn sim-hold" data-act="pull" disabled><i></i><span>동료가 끌어올리기 · 2초 누르기</span></button>
+            <button type="button" class="sim-btn ghost" data-act="reset">처음으로</button>
+          </div>
+          <p class="sim-note" data-note aria-live="polite">균형을 잃으면 바로 떨어지지 않고 줄에 매달립니다.</p>
+        </div>
+        <div class="sim-panel" data-panel="fall" role="tabpanel" hidden>
+          <div class="sim-stage">
+            <img data-s="safe" src="media/fall-safe.jpg" alt="4m 높이에서 떨어진 토끼 단원이 다친 곳 없이 서 있다">
+            <img data-s="legs" class="on" src="media/fall-legs.jpg" alt="8m 높이에서 떨어진 토끼 단원이 두 다리를 잃고 주저앉아 있다">
+            <img data-s="out" src="media/fall-out.jpg" alt="18m 높이에서 떨어진 토끼 단원이 쓰러져 있다">
+            <div class="sim-hud"><p class="sim-chip" data-chip>8m · 두 다리를 잃고 기어감</p></div>
+          </div>
+          <div class="sim-ctrl sim-range">
+            <label for="sim-height">지면과의 높이 차이 <output data-out>8m</output></label>
+            <input id="sim-height" type="range" min="0" max="20" step="0.5" value="8" data-act="height">
+            <div class="sim-scale" aria-hidden="true"><span>0m</span><span style="left:25%">5m</span><span style="left:75%">15m</span><span style="left:100%">20m</span></div>
+          </div>
+          <p class="sim-note" data-note aria-live="polite">5m 미만은 부상 없음, 15m 미만은 두 부위, 15m 이상은 탈락입니다.</p>
+        </div>
+      </div>
+      <div class="ff">
+        <p class="ff-h">줄 위에서 균형을 잃으면</p>
+        <div class="ff-row ff-seq ff-4">
+          <figure><img src="media/rope-tilt.jpg" alt="외줄 위 토끼 단원이 한쪽으로 기울고 균형 막대가 빨간 구간에 있다"><figcaption><b>균형을 잃음</b>빨간 구간에 머물면 추락</figcaption></figure>
+          <figure><img src="media/rope-hang.jpg" alt="토끼 단원이 줄에 매달려 있고 '줄에 매달려 버티는 중, 남은 6.7초' 안내가 보인다"><figcaption><b>줄에 매달려 도움 요청</b>두 팔이 있으면 최대 7초</figcaption></figure>
+          <figure><img src="media/rope-rescue.jpg" alt="곰 단원이 매달린 토끼 단원을 끌어올리고 '동료가 끌어올리는 중 67%' 안내가 보인다"><figcaption><b>동료가 끌어올림</b>2초 누르기</figcaption></figure>
+          <figure class="ok"><img src="media/rope-back.jpg" alt="토끼와 곰 단원이 다시 줄 위에 서 있다"><figcaption><b>줄 위로 복귀</b>공연 계속</figcaption></figure>
+        </div>
+        <p class="ff-h">추락 시 지면과의 높이 차이에 따른 부상 차이</p>
+        <div class="ff-row ff-fork ff-4">
+          <figure><img src="media/rope-drop.jpg" alt="토끼 단원이 줄을 놓치고 아래로 떨어지고 있다"><figcaption><b>구하지 못하면 추락</b>버티는 시간이 끝나면 줄을 놓침</figcaption></figure>
+          <figure><img src="media/fall-safe.jpg" alt="4m 높이에서 떨어진 토끼 단원이 다친 곳 없이 서 있다"><figcaption><b>5m 미만</b>부상 없음</figcaption></figure>
+          <figure><img src="media/fall-legs.jpg" alt="8m 높이에서 떨어진 토끼 단원이 두 다리를 잃고 주저앉아 있다"><figcaption><b>5m 이상 · 15m 미만</b>두 다리를 잃고 기어감</figcaption></figure>
+          <figure class="end"><img src="media/fall-out.jpg" alt="18m 높이에서 떨어진 토끼 단원이 쓰러져 있고 사망 관전 안내가 보인다"><figcaption><b>15m 이상</b>탈락 · 관전으로 전환</figcaption></figure>
+        </div>
+      </div>
+    </figure>`
+    : `<figure class="prob-fig"><img src="media/injury-states.jpg" alt="토끼, 곰, 피에로, 분홍 소녀 캐릭터가 부상 단계마다 다른 동작으로 착지하는 모습"><figcaption><b>3인칭</b>캐릭터 4종의 부상 단계별 착지 동작</figcaption></figure>
+    <figure class="df df-stages df-sim-box">
+      <div class="sim sim-cut" data-sim-cut>
+        <p class="ff-h">3인칭 단계별 부상 확인</p>
+      <div class="sim-panel" data-panel="cut">
+        <div class="sim-stage">
+          <img data-s="c0" class="on" src="media/rope-idle.jpg" alt="토끼 단원이 다친 곳 없이 외줄 위에 있다">
+          <img data-s="c1" src="media/saw-hit1.jpg" alt="톱날이 토끼 단원의 다리에 닿는 순간">
+          <img data-s="c2" src="media/saw-hit2.jpg" alt="톱날이 다시 닿아 두 다리를 잃는 순간">
+          <img data-s="c3" src="media/saw-hit3.jpg" alt="두 다리와 왼팔을 잃은 토끼 단원">
+          <img data-s="c4" src="media/saw-out.jpg" alt="네 번째 톱날에 맞아 탈락하는 순간">
+          <div class="sim-hud"><p class="sim-chip" data-chip>온전한 상태</p></div>
+        </div>
+        <div class="sim-ctrl">
+          <button type="button" class="sim-btn" data-act="hit">톱날에 닿기</button>
+          <button type="button" class="sim-btn ghost" data-act="heal">처음으로</button>
+          <dl class="sim-stats"><div><dt>잃은 부위</dt><dd data-v="lost">없음</dd></div><div><dt>이동 속도</dt><dd data-v="move">100%</dd></div><div><dt>매달리는 시간</dt><dd data-v="hang">외줄 7초</dd></div></dl>
+        </div>
+        <p class="sim-note" data-note aria-live="polite">닿을 때마다 왼다리 → 오른다리 → 왼팔 → 오른팔 순서로 잃습니다.</p>
+      </div>
+      </div>
+      <div class="ff ff-cut">
+      <p class="ff-h">3인칭 단계별 부상 확인</p>
+      <div class="ff-row ff-seq ff-4">
+        <figure><img src="media/saw-hit1.jpg" alt="외줄 위에서 톱날이 토끼 단원의 다리를 스치는 순간"><figcaption><b>1번</b>왼다리를 잃음 · 이동 90%</figcaption></figure>
+        <figure><img src="media/saw-hit2.jpg" alt="톱날이 다시 토끼 단원에 닿아 불꽃이 튀는 순간"><figcaption><b>2번</b>두 다리를 잃음 · 기어서 이동 65%</figcaption></figure>
+        <figure><img src="media/saw-hit3.jpg" alt="두 다리와 왼팔을 잃은 토끼 단원이 줄 위에 남아 있다"><figcaption><b>3번</b>오른팔만 남음 · 매달리는 시간 절반</figcaption></figure>
+        <figure class="end"><img src="media/saw-out.jpg" alt="네 번째 톱날에 맞아 마지막 팔까지 잃는 순간"><figcaption><b>4번</b>네 부위를 모두 잃고 탈락</figcaption></figure>
+      </div>
+      </div>
+      <ol class="st5">${[["온전", "기본 상태"], ["왼다리", "이동 속도 90%"], ["오른다리", "엎드려 기어감 · 이동 65%"], ["왼팔", "매달리는 시간 절반"], ["오른팔", "탈락"]].map(([n, t], i) => `<li class="${i === 4 ? "end" : ""}"><i>${i}</i><b>${i ? n + " 잃음" : n}</b><span>${t}</span></li>`).join("")}</ol>
+    </figure>`;
   const statHTML = s => `<div class="bs-i${s.pending ? " pend" : ""}"><span class="bs-l">${s.label}</span><span class="bs-v"><s>${s.before}</s><i aria-hidden="true">→</i><b>${s.after}</b></span>`
     + (s.pending ? "" : `<span class="bs-bar" role="img" aria-label="이전 ${s.before}, 이후 ${s.after}"><i class="pre" style="width:${s.b}%"></i><i class="post" style="width:${s.a}%"></i></span>`) + `</div>`;
   $("cview").innerHTML = C.cases.map(k => {
     const v = C.values.items[k.principle];
     return `<div class="tp cp" role="tabpanel" id="case-${k.id}" aria-labelledby="ctab-${k.id}"><div class="tp-in cp-in">
-      <p class="case-k"><span class="pn">${caseNo(k.id)} ${(K.loop.find(l => l.hook && l.hook.case === k.id) || {}).key || ""}</span>원칙: ${v.name}</p>
+      <p class="case-k"><span class="pn">${caseNo(k.id)} ${(K.loop.find(l => l.hook && l.hook.case === k.id) || {}).key || ""}</span>${v.name}</p>
       <h3 class="case-t">${k.headline}</h3>
       <div class="ba" role="button" tabindex="0" aria-label="${k.name} Before와 After 함께 재생" aria-pressed="false" aria-describedby="compare-hint-${k.id}">
         ${comparisonSide(k, "before")}${comparisonSide(k, "after")}
       </div>
-      <div class="compare-tools"><button class="compare-toggle" type="button" aria-pressed="false">두 영상 함께 재생</button><p class="compare-hint" id="compare-hint-${k.id}" aria-live="polite">호버하거나 탭하면 함께 재생합니다. 짧은 영상은 끝 장면에서 기다립니다.</p></div>
+      <div class="compare-tools"><p class="compare-hint" id="compare-hint-${k.id}" aria-live="polite">호버하거나 탭하면 함께 재생합니다. 짧은 영상은 끝 장면에서 기다립니다.</p></div>
       ${k.comparisonNote ? `<p class="comparison-note">${k.comparisonNote}</p>` : ""}
-      <div class="cf">
+      ${k.beats ? `<div class="cf cf-beats">
+        <div class="cf-s cf-emo"><span class="cf-tag">기대 감정</span><p class="emo">“${k.emotion}”</p></div>
+        ${k.beats.map((b, i) => `${b.bridge ? `<p class="beat-bridge">${b.bridge}</p>` : ""}<section class="beat beat-${i + 1}">
+          <h4 class="beat-h"><i>흐름 ${i + 1}</i>${b.title}</h4>
+          <div class="cf-s"><span class="cf-tag">문제</span><p>${b.problem}</p>${b.figure === "stages" ? `<figure class="prob-fig"><img src="media/pov-m1-cannon.jpg" alt="마일스톤 1의 1인칭 인간 대포 발사대 화면. 내 캐릭터의 몸이 보이지 않는다"><figcaption><b>1인칭</b>대포 발사대. 내 몸이 화면에 없다</figcaption></figure>` : ""}</div>
+          <div class="cf-s cf-design"><span class="cf-tag">설계</span><p>${b.design}</p>${beatFig(b.figure)}</div>
+          <div class="cf-s cf-beat-result"><span class="cf-tag">${b.resultLabel || "결과"}</span><p>${b.result}</p>${b.stats && k.stats.length ? `<div class="bs in">${k.stats.map(statHTML).join("")}</div>${k.statNote ? `<p class="small bs-note">${k.statNote}</p>` : ""}` : ""}</div>
+        </section>`).join("")}
+        ${k.next ? `<div class="cf-s cf-next"><span class="cf-tag">다음 판단</span><p>${k.next}</p></div>` : ""}
+      </div>` : `<div class="cf">
         <div class="cf-s cf-emo"><span class="cf-tag">기대 감정</span><p class="emo">“${k.emotion}”</p></div>
         <div class="cf-s"><span class="cf-tag">문제</span><p>${k.problem}</p></div>
-        <div class="cf-s cf-design"><span class="cf-tag">설계</span>${k.design.split("\n\n").map(x => `<p>${x}</p>`).join("")}${designFig(k.figure)}<details><summary>세부 규칙 보기</summary><ul>${li(k.points)}</ul></details></div>
-        <div class="cf-s"><span class="cf-tag">결과</span><p>${k.result}</p>${k.stats.length ? `<div class="bs in">${k.stats.map(statHTML).join("")}</div><p class="small bs-note">${k.statNote}</p>` : ""}</div>
-        <div class="cf-s"><span class="cf-tag">다음 판단</span><p>${k.next}</p></div>
-      </div>
+        <div class="cf-s cf-design"><span class="cf-tag">설계</span>${k.design.split("\n\n").map((x, i) => `<p>${x}</p>${k.designFigs && k.designFigs[i] ? purFig(k.designFigs[i]) : ""}`).join("")}${designFig(k.figure)}</div>
+        <div class="cf-s"><span class="cf-tag">결과</span>${k.result.split("\n\n").map(x => `<p>${x}</p>`).join("")}${k.stats.length ? `<div class="bs in">${k.stats.map(statHTML).join("")}</div>${k.statNote ? `<p class="small bs-note">${k.statNote}</p>` : ""}` : ""}</div>
+        ${k.next ? `<div class="cf-s"><span class="cf-tag">다음 판단</span><p>${k.next}</p></div>` : ""}
+      </div>`}
     </div></div>`;
   }).join("");
+  // 02 추격 단계 시뮬레이션: 단계를 고르면 장면·조명·규칙이 바뀌고, 직전 단계와 달라진 항목을 강조한다.
+  (() => {
+    const ST = [
+      { n: "1단계 · 추격 시작", sight: 5, light: 70, tint: 0, rules: [], fx: ["가끔 지직임"] },
+      { n: "2단계 · +30초", sight: 8, light: 45, tint: 0, rules: [], fx: ["가끔 지직임", "스파크", "단계 시작 때 3번 깜빡임"] },
+      { n: "3단계 · +60초", sight: 10, light: 25, tint: .2, rules: ["벽 너머까지 감지"], fx: ["가끔 지직임", "스파크", "단계 시작 때 3번 깜빡임", "붉은빛", "약 10초마다 방 전체 깜빡임"] },
+      { n: "4단계 · +90초", sight: 20, light: 25, tint: .4, rules: ["벽 너머까지 감지", "모든 위치를 알고 가장 가까운 단원 추격"], fx: ["가끔 지직임", "스파크", "단계 시작 때 3번 깜빡임", "더 짙은 붉은빛", "약 5초마다 방 전체 깜빡임"] }];
+    document.querySelectorAll("[data-st-sim]").forEach(sim => {
+      const steps = [...sim.querySelectorAll(".st-step")], imgs = [...sim.querySelectorAll(".sim-stage img")];
+      const chip = sim.querySelector("[data-chip]"), lux = sim.querySelector("[data-lux]"), luxV = sim.querySelector("[data-lux-v]");
+      const ruleEl = sim.querySelector("[data-rule]"), fxEl = sim.querySelector("[data-fx]");
+      const prev = sim.querySelector('[data-act="prev"]'), next = sim.querySelector('[data-act="next"]'), play = sim.querySelector('[data-act="play"]');
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+      let cur = 0, timer = 0;
+      const chips = (items, before) => items.map(([t, changed]) => `<li${changed && before ? ' class="new"' : ""}>${t}</li>`).join("");
+      const set = i => {
+        cur = i; const s = ST[i], p = ST[i - 1];
+        steps.forEach((b, k) => { b.setAttribute("aria-selected", String(k === i)); b.classList.toggle("past", k < i); b.tabIndex = k === i ? 0 : -1; });
+        imgs.forEach((im, k) => im.classList.toggle("on", k === i));
+        chip.textContent = `${s.n} · 시야 ${s.sight}m`; chip.className = "sim-chip" + (i === 3 ? " bad" : "");
+        lux.style.width = s.light + "%"; lux.style.backgroundColor = `color-mix(in srgb, #E0566C ${Math.round(s.tint * 250)}%, #E8B84A)`; luxV.textContent = s.light + "%";
+        const rules = [[p && p.sight !== s.sight ? `시야 ${p.sight}m → ${s.sight}m` : `시야 ${s.sight}m`, !p || p.sight !== s.sight], ...s.rules.map(r => [r, !p || !p.rules.includes(r)])];
+        const fx = [[p && p.light !== s.light ? `조명 ${p.light}% → ${s.light}%` : `조명 ${s.light}%`, !p || p.light !== s.light], ...s.fx.map(f => [f, !p || !p.fx.includes(f)])];
+        ruleEl.innerHTML = chips(rules, p); fxEl.innerHTML = chips(fx, p);
+        prev.disabled = i === 0; next.disabled = i === ST.length - 1;
+      };
+      const stop = () => { clearInterval(timer); timer = 0; play.setAttribute("aria-pressed", "false"); play.textContent = "처음부터 자동 재생"; };
+      steps.forEach((b, k) => {
+        b.addEventListener("click", () => { stop(); set(k); });
+        b.addEventListener("keydown", e => { const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!d) return; e.preventDefault(); stop(); const j = Math.max(0, Math.min(3, cur + d)); set(j); steps[j].focus(); });
+      });
+      prev.addEventListener("click", () => { stop(); set(Math.max(0, cur - 1)); });
+      next.addEventListener("click", () => { stop(); set(Math.min(3, cur + 1)); });
+      play.addEventListener("click", () => {
+        if (timer) return stop();
+        set(0); play.setAttribute("aria-pressed", "true"); play.textContent = "멈춤";
+        timer = setInterval(() => { if (cur >= 3) return stop(); set(cur + 1); }, reduce.matches ? 3000 : 2200);
+      });
+      document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); });
+      set(0);
+    });
+  })();
+  // 02 도식 장면 확대 보기
+  (() => {
+    const dlg = document.createElement("dialog");
+    dlg.className = "pf-zoom";
+    dlg.innerHTML = '<img alt=""><p></p><button type="button" aria-label="닫기">×</button>';
+    document.body.appendChild(dlg);
+    const im = dlg.querySelector("img"), cap = dlg.querySelector("p");
+    document.addEventListener("click", e => {
+      const hit = e.target.closest(".pf img, .oth-img, .test-shot img") || e.target.closest(".test-shot button")?.querySelector("img"), box = hit && hit.closest(".sim-stage");
+      const t = box ? box.querySelector("img.on") : hit;
+      if (!t || document.documentElement.classList.contains("paged") || !dlg.showModal) return;
+      im.src = t.dataset.zoomSrc || t.src; im.alt = t.alt; cap.textContent = t.alt; dlg.showModal();
+    });
+    dlg.addEventListener("click", () => dlg.close());
+  })();
+  // 01 흐름 1 조작 시뮬레이션: 실제 캡처를 상태별로 바꿔 보여 주고 수치는 게임 설정값을 따른다.
+  document.querySelectorAll("[data-sim]").forEach(sim => {
+    const tabs = [...sim.querySelectorAll(".sim-tab")], panels = [...sim.querySelectorAll(".sim-panel")];
+    const P = k => sim.querySelector(`[data-panel="${k}"]`);
+    const show = (panel, s) => panel.querySelectorAll(".sim-stage img").forEach(i => i.classList.toggle("on", i.dataset.s === s));
+    const chip = (panel, text, tone) => { const c = panel.querySelector("[data-chip]"); c.textContent = text; c.className = "sim-chip" + (tone ? " " + tone : ""); };
+    const note = (panel, text) => { panel.querySelector("[data-note]").textContent = text; };
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+    // 균형: 기울기 → 매달림(두 팔 7초) → 2초 끌어올리기 또는 추락. 끌어올리는 동안 남은 시간은 멈춘다.
+    const bal = (() => {
+      const p = P("bal"), tiltBtn = p.querySelector('[data-act="tilt"]'), pullBtn = p.querySelector('[data-act="pull"]'),
+        meter = p.querySelector("[data-meter]"), fill = p.querySelector("[data-meter-fill]"), bar = pullBtn.querySelector("i");
+      let state = "idle", total = 7, left = 7, pull = 0, pulling = false, raf = 0, last = 0, tiltTimer = 0;
+      const stop = () => { cancelAnimationFrame(raf); raf = 0; clearTimeout(tiltTimer); };
+      const setPull = v => { pull = v; bar.style.transform = `scaleX(${Math.min(1, v / 2)})`; };
+      const reset = () => {
+        stop(); state = "idle"; pulling = false; setPull(0); meter.hidden = true;
+        tiltBtn.disabled = false; pullBtn.disabled = true;
+        show(p, "idle"); chip(p, "줄 위에서 균형을 잡는 중"); note(p, "균형을 잃으면 바로 떨어지지 않고 줄에 매달립니다.");
+      };
+      const drop = () => {
+        stop(); state = "drop"; pulling = false; setPull(0); meter.hidden = true; pullBtn.disabled = true;
+        show(p, "drop"); chip(p, "버티는 시간이 끝나 줄을 놓침", "bad");
+        note(p, "구하지 못하면 추락하고, 지면과의 높이 차이에 따라 결과가 달라집니다. '추락에 따른 부상' 탭에서 확인해 보세요.");
+      };
+      const saved = () => {
+        stop(); state = "saved"; pulling = false; setPull(2); meter.hidden = true; pullBtn.disabled = true;
+        show(p, "back"); chip(p, "줄 위로 복귀 · 공연 계속", "ok"); note(p, "동료가 끝까지 끌어올려 같은 공연에 다시 참여합니다.");
+      };
+      const tick = now => {
+        const dt = Math.min(.1, (now - last) / 1000); last = now;
+        if (pulling) { setPull(pull + dt); if (pull >= 2) return saved(); }
+        else { left = Math.max(0, left - dt); if (left <= 0) return drop(); }
+        fill.style.transform = `scaleX(${left / total})`;
+        chip(p, pulling ? `동료가 끌어올리는 중 · ${Math.round(Math.min(1, pull / 2) * 100)}%` : `줄에 매달려 버티는 중 · 남은 ${left.toFixed(1)}초`, left < 2 && !pulling ? "bad" : "");
+        raf = requestAnimationFrame(tick);
+      };
+      const hang = () => {
+        state = "hang"; total = left = 7; setPull(0); meter.hidden = false; pullBtn.disabled = false;
+        show(p, "hang"); note(p, "남은 시간 안에 동료가 다가와 2초 동안 눌러 끌어올려야 합니다. 버튼을 길게 눌러 보세요.");
+        last = performance.now(); raf = requestAnimationFrame(tick);
+      };
+      tiltBtn.addEventListener("click", () => {
+        if (state !== "idle") return;
+        state = "tilt"; tiltBtn.disabled = true;
+        show(p, "tilt"); chip(p, "균형을 잃음 · 빨간 구간", "bad"); note(p, "균형 막대가 빨간 구간에 머물면 줄 아래로 미끄러집니다.");
+        tiltTimer = setTimeout(hang, reduce.matches ? 0 : 1100);
+      });
+      const startPull = e => { if (state !== "hang" || pullBtn.disabled) return; if (e) e.preventDefault(); pulling = true; show(p, "pull"); };
+      const endPull = () => { if (!pulling || state !== "hang") return; pulling = false; setPull(0); show(p, "hang"); };
+      pullBtn.addEventListener("pointerdown", e => { try { pullBtn.setPointerCapture(e.pointerId); } catch (_) {} startPull(e); });
+      ["pointerup", "pointercancel", "lostpointercapture"].forEach(n => pullBtn.addEventListener(n, endPull));
+      pullBtn.addEventListener("keydown", e => { if ((e.key === " " || e.key === "Enter") && !e.repeat) startPull(e); });
+      pullBtn.addEventListener("keyup", e => { if (e.key === " " || e.key === "Enter") endPull(); });
+      pullBtn.addEventListener("contextmenu", e => e.preventDefault());
+      p.querySelector('[data-act="reset"]').addEventListener("click", reset);
+      document.addEventListener("visibilitychange", () => { if (document.hidden) endPull(); });
+      reset();
+      return { reset };
+    })();
+    const select = k => {
+      tabs.forEach(t => t.setAttribute("aria-selected", String(t.dataset.tab === k)));
+      panels.forEach(p => p.hidden = p.dataset.panel !== k);
+      if (k !== "bal") bal.reset();
+    };
+    tabs.forEach(t => t.addEventListener("click", () => select(t.dataset.tab)));
+    // 추락 높이: 5m 미만 무사, 15m 미만 두 부위, 그 이상 탈락.
+    (() => {
+      const p = P("fall"), range = p.querySelector('[data-act="height"]'), out = p.querySelector("[data-out]");
+      const update = () => {
+        const h = +range.value; out.textContent = `${h}m`;
+        const [s, text, tone] = h < 5 ? ["safe", "부상 없음", "ok"] : h < 15 ? ["legs", "두 다리를 잃고 기어감", ""] : ["out", "탈락 · 관전으로 전환", "bad"];
+        show(p, s); chip(p, `${h}m · ${text}`, tone);
+      };
+      range.addEventListener("input", update); update();
+    })();
+  });
+  // 02 흐름 2 장애물 조작: 닿을 때마다 왼다리 → 오른다리 → 왼팔 → 오른팔.
+  (() => {
+    const show = (panel, s) => panel.querySelectorAll(".sim-stage img").forEach(i => i.classList.toggle("on", i.dataset.s === s));
+    const chip = (panel, text, tone) => { const c = panel.querySelector("[data-chip]"); c.textContent = text; c.className = "sim-chip" + (tone ? " " + tone : ""); };
+    const note = (panel, text) => { panel.querySelector("[data-note]").textContent = text; };
+    document.querySelectorAll("[data-sim-cut]").forEach(sim => {
+      const p = sim.querySelector('[data-panel="cut"]'), hit = p.querySelector('[data-act="hit"]');
+      const steps = [
+        ["온전한 상태", "", "없음", "100%", "외줄 7초"],
+        ["왼다리를 잃음", "", "왼다리", "90%", "외줄 7초"],
+        ["두 다리를 잃고 기어감", "", "두 다리", "65%", "외줄 7초"],
+        ["오른팔만 남음", "bad", "두 다리 · 왼팔", "65%", "외줄 3.5초"],
+        ["네 부위를 모두 잃고 탈락", "bad", "모두", "—", "—"]];
+      let n = 0;
+      const set = v => {
+        n = v; const [label, tone, lost, move, hang] = steps[n];
+        show(p, "c" + n); chip(p, n ? `${n}번째 접촉 · ${label}` : label, tone);
+        p.querySelector('[data-v="lost"]').textContent = lost; p.querySelector('[data-v="move"]').textContent = move; p.querySelector('[data-v="hang"]').textContent = hang;
+        hit.disabled = n >= 4;
+        note(p, n >= 4 ? "네 번째 접촉으로 탈락했습니다. '처음으로'를 눌러 다시 볼 수 있습니다." : "닿을 때마다 왼다리 → 오른다리 → 왼팔 → 오른팔 순서로 잃습니다.");
+      };
+      hit.addEventListener("click", () => set(Math.min(4, n + 1)));
+      p.querySelector('[data-act="heal"]').addEventListener("click", () => set(0));
+      set(0);
+    });
+  })();
   // 두 영상을 한 묶음으로 제어한다. 짧은 영상은 마지막 프레임에서 기다리고 독립 반복하지 않는다.
   const comparisons = [...document.querySelectorAll("#cview .cp")].map((panel, index) => {
-    const box = panel.querySelector(".ba"), toggle = panel.querySelector(".compare-toggle"), hint = panel.querySelector(".compare-hint");
+    const box = panel.querySelector(".ba"), hint = panel.querySelector(".compare-hint");
     const videos = [...box.querySelectorAll("video")], cues = [...box.querySelectorAll(".ba-cue")];
     const info = [C.cases[index].before.media, C.cases[index].after.media];
     const reduce = matchMedia("(prefers-reduced-motion: reduce)");
@@ -1103,7 +1599,6 @@ section.ai{padding-bottom:56px}
       cancelAnimationFrame(frame);
       videos.forEach(v => { v.pause(); if (v.readyState) v.currentTime = 0; });
       box.classList.remove("playing"); box.setAttribute("aria-pressed", "false"); box.removeAttribute("aria-busy");
-      toggle.setAttribute("aria-pressed", "false"); toggle.textContent = "두 영상 함께 재생";
       hint.textContent = message || idleText();
       cues.forEach((cue, i) => cue.textContent = info[i].focus);
     }
@@ -1125,7 +1620,6 @@ section.ai{padding-bottom:56px}
       active = true; mode = origin; const token = ++epoch;
       aborter = new AbortController();
       box.setAttribute("aria-pressed", "true"); box.setAttribute("aria-busy", "true");
-      toggle.setAttribute("aria-pressed", "true"); toggle.textContent = "정지하고 썸네일 보기";
       hint.textContent = "두 영상을 준비하고 있습니다…";
       try {
         await Promise.all(videos.map(v => ready(v, aborter.signal)));
@@ -1134,7 +1628,7 @@ section.ai{padding-bottom:56px}
         await Promise.all(videos.map(v => v.play()));
         if (token !== epoch) return;
         box.classList.add("playing"); box.removeAttribute("aria-busy");
-        hint.textContent = "함께 재생 중 · 다시 탭하거나 정지 버튼을 누르면 썸네일로 돌아갑니다.";
+        hint.textContent = "함께 재생 중 · 다시 탭하거나 Enter를 누르면 썸네일로 돌아갑니다.";
         function track() {
           if (!active || token !== epoch) return;
           if (!available()) { stop(); return; }
@@ -1159,7 +1653,7 @@ section.ai{padding-bottom:56px}
     const flip = () => active ? stop() : start("manual");
     box.addEventListener("pointerenter", e => { if (e.pointerType === "mouse" && !reduce.matches) start("hover"); });
     box.addEventListener("pointerleave", e => { if (e.pointerType === "mouse" && mode === "hover") stop(); });
-    box.addEventListener("click", flip); toggle.addEventListener("click", flip);
+    box.addEventListener("click", flip);
     box.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); } });
     new IntersectionObserver(es => { if (!es[0].isIntersecting) stop(); }, { threshold: 0 }).observe(box);
     document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); });
@@ -1201,7 +1695,8 @@ section.ai{padding-bottom:56px}
       if (root.classList.contains("paged")) return;
       const avail = view.clientHeight;
       dwell = Math.round(innerHeight * .35);
-      extras = tins.map(n => Math.max(0, n.scrollHeight - avail + 40));
+      // 마지막 사례는 끝 여유를 두지 않아 다음 "그 밖에 맡은 시스템"과 붙어 보이게 한다.
+      extras = tins.map((n, j) => Math.max(0, n.scrollHeight - avail + (j === tins.length - 1 ? 0 : 40)));
       starts = []; let acc = 0;
       extras.forEach(e => { starts.push(acc); acc += e + dwell * .2 + dwell; });
       rootEl.style.height = (stageEl.offsetHeight + starts[starts.length - 1] + extras[extras.length - 1] + dwell * .25) + "px";
@@ -1290,14 +1785,20 @@ section.ai{padding-bottom:56px}
     e.preventDefault(); caseTabs.go(i);
   }));
 
-  $("oth").innerHTML = C.otherSystems.map(o => `<article><b>${o.name}</b><span class="tg">${o.tag}</span><p>${o.problem}</p><p class="res">${o.result}</p></article>`).join("");
+  $("oth").innerHTML = C.otherSystems.map(o => `<article><header class="oth-head"><b>${o.name}</b><span class="tg">${o.tag}</span></header>${o.video ? `<figure class="oth-v"><video src="${o.video.src}" poster="${o.video.poster}" muted loop playsinline autoplay preload="metadata" aria-label="${o.video.cap}"></video><img class="oth-poster" src="${o.video.poster}" alt="${o.video.cap}"><figcaption>${o.video.cap}</figcaption></figure>` : ""}${o.image ? `<figure class="oth-v"><img class="oth-img" src="${o.image.src}" alt="${o.image.cap}" loading="lazy"><figcaption>${o.image.cap}</figcaption></figure>` : ""}<p>${o.problem}</p><p class="res">${o.result}</p></article>`).join("");
+  // 그 밖에 맡은 시스템 참고 영상: 움직임 줄이기 설정이면 자동 재생하지 않고, 누르면 재생·정지한다.
+  document.querySelectorAll(".oth-v video").forEach(v => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); }
+    v.addEventListener("click", () => v.paused ? v.play() : v.pause());
+  });
 
-  // 테스트 결과를 통한 피드백: 수치는 각 시스템 사례로 옮기고, 여기서는 테스트에서 범위를 정한 과정만 남긴다.
+  // 실제 응답 화면 → 경험 해석과 판단 기준 → 마일스톤별 결정 기록.
   const T = C.tests;
   $("testHead").textContent = T.title;
-  $("fb").innerHTML = `<div class="fb-c"><p class="small">${T.m1.when}</p><h3>처음 막힌 곳</h3><dl>${T.m1.findings.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl></div>
-    <div class="fb-c fb-d"><p class="small">회고에서 내린 결정</p><p class="serif">${T.m1.decision}</p><p class="small">${T.m1.decisionNote}</p></div>
-    <div class="fb-c"><p class="small">${T.m2.when} 이후</p><h3>남은 문제와 다음 조치</h3><dl>${T.m2.remain.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl><ul class="chips">${li(T.m2.next)}</ul></div>`;
+  const L = T.logEvidence;
+  $("testHead").insertAdjacentHTML("afterend", `<div class="test-log" id="testLog"><figure class="test-shot"><button type="button" aria-label="동선 로그 전체 화면 확대"><img src="${esc(L.mapSrc)}" data-zoom-src="${esc(L.src)}" alt="${esc(L.caption)}"></button><figcaption><b>${esc(L.title)}</b>${esc(L.body)}</figcaption></figure></div>`);
+  $("fb").insertAdjacentHTML("beforebegin", `<div class="test-evidence" id="testEvidence">${T.evidence.map(e => `<figure class="test-shot"><button type="button" aria-label="${esc(e.title)} — 설문 화면 확대"><img src="${esc(e.src)}" alt="${esc(e.caption)}"></button><figcaption><b>${esc(e.title)}</b>${esc(e.caption)}</figcaption></figure>`).join("")}</div><div class="test-reading" id="testReading">${T.interpretation.map(p => `<div><h3>${esc(p.title)}</h3><p>${esc(p.body)}</p></div>`).join("")}</div>`);
+  $("fb").remove();
 
   $("mine").innerHTML = li(C.scope.mine);
   $("others").innerHTML = li(C.scope.others);
