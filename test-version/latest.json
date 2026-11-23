@@ -15,9 +15,9 @@
     "document": "lingocity/print/index.html"
   },
   "dolleye": {
-    "version": "v2",
-    "pages": 5,
-    "document": "dolleye/print/index.html"
+    "version": "v3",
+    "pages": 21,
+    "document": "dolleye/index.html?print=1"
   },
   "rolling-kimbaps": {
     "version": "v2",
