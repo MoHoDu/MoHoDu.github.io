@@ -364,7 +364,7 @@ function showTime(){
       marker.classList.toggle('reached',reached);
       if(reached) count++;
     }
-    track.style.setProperty('--elapsed',seconds/90*100+'%');
+    track.style.setProperty('--elapsed',seconds/Number(clock.max)*100+'%');
     lane.querySelector('.lane-label b').textContent=count+'회';
     descriptions.push(lane.querySelector('strong').textContent+' '+count+'회');
   }
@@ -397,9 +397,9 @@ for(const clip of timingClips){
   clip.addEventListener('timeupdate',()=>{
     if(timingLead!==clip)return;
     const t=clip.currentTime;
-    clock.value=Math.floor(Math.min(t,90));
+    clock.value=Math.min(t,Number(clock.max)).toFixed(1);
     showTime();
-    if(t>=90){stopTiming();return}
+    if(t>=Number(clock.max)){stopTiming();return}
     for(const other of timingClips){
       if(other!==clip && Math.abs(other.currentTime-Math.min(t,other.duration))>.2) seekTimingClip(other,t);
     }
@@ -409,7 +409,7 @@ for(const clip of timingClips){
 playTiming.onclick=async()=>{
   if(timingLead){stopTiming();return}
   const lead=timingClips.reduce((a,b)=>a.duration>=b.duration?a:b);
-  if(Number(clock.value)>=Math.min(90,lead.duration)) clock.value=0;
+  if(Number(clock.value)>=Math.min(Number(clock.max),lead.duration)) clock.value=0;
   scrubTiming();
   timingLead=lead;
   playTiming.textContent='일시 정지';
