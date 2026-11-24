@@ -370,6 +370,27 @@ function showTime(){
   }
   clock.setAttribute('aria-valuetext',seconds+'초, '+descriptions.join(', '));
 }
+const timingModeButtons = document.querySelectorAll('[data-timing-mode]');
+for (const button of timingModeButtons) {
+  button.addEventListener('click', () => {
+    const mode = button.dataset.timingMode;
+    for (const option of timingModeButtons) {
+      option.setAttribute('aria-pressed', String(option === button));
+    }
+    for (const lane of lanes) {
+      const track = lane.querySelector('.summon-track');
+      for (const marker of track.children) {
+        const at = marker.dataset[mode];
+        marker.dataset.at = at;
+        marker.style.left = (100 * Number(at) / Number(clock.max)) + '%';
+        marker.querySelector('small').textContent = at + '초';
+      }
+      track.style.setProperty('--end', track.lastElementChild.style.left);
+      lane.querySelector('.timing-count-label').textContent = mode === 'cast' ? '누적 소환' : '사용 기회';
+    }
+    showTime();
+  });
+}
 const timingClips=[...document.querySelectorAll('#summon-timing .timing-clip video')];
 const playTiming=document.getElementById('timing-play');
 let timingLead=null;

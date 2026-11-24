@@ -366,3 +366,7 @@ dialog{color:var(--ink);background:var(--bg);border:1px solid var(--line);border
   .replay-transport { flex-wrap: wrap; gap: .35rem }
 }
 @media(max-width:600px) { .chapter .summon-sequence .scene-visual { grid-row: 1/3 } }
+
+.timing-modes{display:flex;gap:.4rem;flex-wrap:wrap;margin:0 0 1rem}
+.timing-modes button{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:.35rem .8rem;cursor:pointer}
+.timing-modes button[aria-pressed="true"]{color:var(--bg);background:var(--ink);border-color:var(--ink)}
